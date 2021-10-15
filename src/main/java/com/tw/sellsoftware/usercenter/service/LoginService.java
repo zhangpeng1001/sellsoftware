@@ -21,7 +21,7 @@ public class LoginService {
         if(userInfoForDB == null){
             return Optional.of("User does not exist!");
         }
-        if(!userInfoForDB.getPassword().equals(userInfo.getPassword())){
+        if(!userInfo.getPassword().equals(userInfoForDB.getPassword())){
             return Optional.of("Password error!");
         }
         return Optional.empty();

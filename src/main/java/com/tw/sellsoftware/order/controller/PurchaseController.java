@@ -19,7 +19,7 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
-    @PostMapping("/userRegister")
+    @PostMapping("/purchaseSoftware")
     public ResponseEntity purchaseSoftware(@RequestBody PurchaseParam purchaseParam) {
         Optional<String> optional = purchaseService.purchaseSoftware(purchaseParam);
         if (optional.isPresent()) {
