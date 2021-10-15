@@ -8,7 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -17,8 +20,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = SoftwareInfoController.class)
+//@RunWith(SpringRunner.class)
+//@WebMvcTest(value = SoftwareInfoController.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 class SoftwareInfoControllerTest {
 
     @InjectMocks

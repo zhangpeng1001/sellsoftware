@@ -4,6 +4,7 @@ import com.tw.sellsoftware.order.domain.OrderInfo;
 import com.tw.sellsoftware.order.service.OrderService;
 import com.tw.sellsoftware.software.domain.SoftwareInfo;
 import com.tw.sellsoftware.utils.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("/order")
 public class OrderController {
 
+    @Autowired
     private OrderService orderService;
 
     @GetMapping("/list/{pageNum}/{pageSize}")

@@ -20,7 +20,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/userLogin")
-    public ResponseEntity userRegister(@RequestBody UserInfo userInfo) {
+    public ResponseEntity userLogin(@RequestBody UserInfo userInfo) {
         if (userInfo == null || StringUtils.isEmpty(userInfo.getUserName()) || StringUtils.isEmpty(userInfo.getPassword())) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

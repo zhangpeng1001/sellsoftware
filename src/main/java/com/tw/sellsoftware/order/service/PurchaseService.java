@@ -18,12 +18,12 @@ import java.util.Optional;
 public class PurchaseService {
 
     @Autowired
-    private UserInfoService UserInfoService;
+    private UserInfoService userInfoService;
 
     @Autowired
     private OrderService orderService;
 
-    public Optional<String> purchase(PurchaseParam purchaseParam) {
+    public Optional<String> purchaseSoftware(PurchaseParam purchaseParam) {
         VipInfo vipInfo = getVipInfo();
         if (purchaseParam.isHaveDiscount()) {
             Optional<String> valid = haveDiscountValid(purchaseParam, vipInfo);
@@ -41,7 +41,7 @@ public class PurchaseService {
     }
 
     private VipInfo getVipInfo() {
-        UserInfo userInfo = UserInfoService.getUserByUserId(CommonUtils.getCurrentUserId());
+        UserInfo userInfo = userInfoService.getUserByUserId(CommonUtils.getCurrentUserId());
         return CommonUtils.getVipInfos().stream().filter(vipInfo -> vipInfo.getVipGrade().equals(userInfo.getVipGrade())).findFirst().orElse(null);
     }
 

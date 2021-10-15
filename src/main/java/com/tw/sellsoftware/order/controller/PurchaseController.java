@@ -20,8 +20,8 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @PostMapping("/userRegister")
-    public ResponseEntity userRegister(@RequestBody PurchaseParam purchaseParam) {
-        Optional<String> optional = purchaseService.purchase(purchaseParam);
+    public ResponseEntity purchaseSoftware(@RequestBody PurchaseParam purchaseParam) {
+        Optional<String> optional = purchaseService.purchaseSoftware(purchaseParam);
         if (optional.isPresent()) {
             return new ResponseEntity(optional.get(), HttpStatus.BAD_REQUEST);
         }
