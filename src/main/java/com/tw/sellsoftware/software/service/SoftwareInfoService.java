@@ -1,7 +1,9 @@
 package com.tw.sellsoftware.software.service;
 
 import com.tw.sellsoftware.software.domain.SoftwareInfo;
+import com.tw.sellsoftware.software.mapper.SoftwareInfoMapper;
 import com.tw.sellsoftware.utils.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +12,9 @@ import java.util.Optional;
 
 @Service
 public class SoftwareInfoService {
+
+    @Autowired
+    private SoftwareInfoMapper softwareInfoMapper;
 
     public SoftwareInfo querySoftwareById(String softwareId) {
         //TODO query software data from DB
@@ -21,8 +26,7 @@ public class SoftwareInfoService {
     }
 
     private List<SoftwareInfo> querySoftwareInfo(PageInfo pageInfo) {
-        //TODO query software data from DB
-        return new ArrayList<>();
+       return softwareInfoMapper.querySoftwareInfo(pageInfo);
     }
 
 

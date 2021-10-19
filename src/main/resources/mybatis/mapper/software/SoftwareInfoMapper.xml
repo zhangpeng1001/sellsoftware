@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tw.sellsoftware.software.mapper.SoftwareInfoMapper">
+  <resultMap id="BaseResultMap" type="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="software_name" jdbcType="VARCHAR" property="softwareName" />
+    <result column="software_price" jdbcType="DECIMAL" property="softwarePrice" />
+    <result column="software_describe" jdbcType="VARCHAR" property="softwareDescribe" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, software_name, software_price, software_describe, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_software_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_software_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    insert into t_software_info (id, software_name, software_price, 
+      software_describe, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{softwareName,jdbcType=VARCHAR}, #{softwarePrice,jdbcType=DECIMAL}, 
+      #{softwareDescribe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    insert into t_software_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="softwareName != null">
+        software_name,
+      </if>
+      <if test="softwarePrice != null">
+        software_price,
+      </if>
+      <if test="softwareDescribe != null">
+        software_describe,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="softwareName != null">
+        #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="softwarePrice != null">
+        #{softwarePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="softwareDescribe != null">
+        #{softwareDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    update t_software_info
+    <set>
+      <if test="softwareName != null">
+        software_name = #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="softwarePrice != null">
+        software_price = #{softwarePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="softwareDescribe != null">
+        software_describe = #{softwareDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    update t_software_info
+    set software_name = #{softwareName,jdbcType=VARCHAR},
+      software_price = #{softwarePrice,jdbcType=DECIMAL},
+      software_describe = #{softwareDescribe,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="software_name" jdbcType="VARCHAR" property="softwareName" />
+    <result column="software_price" jdbcType="DECIMAL" property="softwarePrice" />
+    <result column="software_describe" jdbcType="VARCHAR" property="softwareDescribe" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, software_name, software_price, software_describe
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_software_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_software_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    insert into t_software_info (id, software_name, software_price, 
+      software_describe)
+    values (#{id,jdbcType=INTEGER}, #{softwareName,jdbcType=VARCHAR}, #{softwarePrice,jdbcType=DECIMAL}, 
+      #{softwareDescribe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    insert into t_software_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="softwareName != null">
+        software_name,
+      </if>
+      <if test="softwarePrice != null">
+        software_price,
+      </if>
+      <if test="softwareDescribe != null">
+        software_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="softwareName != null">
+        #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="softwarePrice != null">
+        #{softwarePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="softwareDescribe != null">
+        #{softwareDescribe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    update t_software_info
+    <set>
+      <if test="softwareName != null">
+        software_name = #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="softwarePrice != null">
+        software_price = #{softwarePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="softwareDescribe != null">
+        software_describe = #{softwareDescribe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    update t_software_info
+    set software_name = #{softwareName,jdbcType=VARCHAR},
+      software_price = #{softwarePrice,jdbcType=DECIMAL},
+      software_describe = #{softwareDescribe,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="software_name" jdbcType="VARCHAR" property="softwareName" />
+    <result column="software_price" jdbcType="DECIMAL" property="softwarePrice" />
+    <result column="software_describe" jdbcType="VARCHAR" property="softwareDescribe" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, software_name, software_price, software_describe
+  </sql>
+
+  <select id="querySoftwareInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_software_info
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_software_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_software_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    insert into t_software_info (id, software_name, software_price, 
+      software_describe)
+    values (#{id,jdbcType=INTEGER}, #{softwareName,jdbcType=VARCHAR}, #{softwarePrice,jdbcType=DECIMAL}, 
+      #{softwareDescribe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    insert into t_software_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="softwareName != null">
+        software_name,
+      </if>
+      <if test="softwarePrice != null">
+        software_price,
+      </if>
+      <if test="softwareDescribe != null">
+        software_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="softwareName != null">
+        #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="softwarePrice != null">
+        #{softwarePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="softwareDescribe != null">
+        #{softwareDescribe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    update t_software_info
+    <set>
+      <if test="softwareName != null">
+        software_name = #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="softwarePrice != null">
+        software_price = #{softwarePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="softwareDescribe != null">
+        software_describe = #{softwareDescribe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tw.sellsoftware.software.domain.SoftwareInfo">
+    update t_software_info
+    set software_name = #{softwareName,jdbcType=VARCHAR},
+      software_price = #{softwarePrice,jdbcType=DECIMAL},
+      software_describe = #{softwareDescribe,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

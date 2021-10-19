@@ -1,7 +1,9 @@
 package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
+import com.tw.sellsoftware.usercenter.mapper.UserInfoMapper;
 import com.tw.sellsoftware.utils.StringUtils;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ public class RegisterService {
 
     @Autowired
     private UserInfoService userInfoService;
+
+
 
     public Optional<String> userRegister(UserInfo userInfo) {
         Optional<String> optional = userDataValidate(userInfo);

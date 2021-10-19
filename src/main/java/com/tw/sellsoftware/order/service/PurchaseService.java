@@ -41,8 +41,10 @@ public class PurchaseService {
     }
 
     private VipInfo getVipInfo() {
-        UserInfo userInfo = userInfoService.getUserByUserId(CommonUtils.getCurrentUserId());
-        return CommonUtils.getVipInfos().stream().filter(vipInfo -> vipInfo.getVipGrade().equals(userInfo.getVipGrade())).findFirst().orElse(null);
+        //TODO need rewrite
+        return new VipInfo();
+//        UserInfo userInfo = userInfoService.getUserByUserId(CommonUtils.getCurrentUserId());
+//        return CommonUtils.getVipInfos().stream().filter(vipInfo -> vipInfo.getVipGrade().equals(userInfo.getVipGrade())).findFirst().orElse(null);
     }
 
     private Optional<String> haveDiscountValid(PurchaseParam purchaseParam, VipInfo vipInfo) {
@@ -52,28 +54,28 @@ public class PurchaseService {
         if (vipInfo == null) {
             return Optional.of("You are not a vip user,so cannot enjoy a discount!");
         }
-        if (purchaseParam.getDiscount() != vipInfo.getDiscount()) {
-            return Optional.of("Your membership level does not match the discount!");
-        }
+//        if (purchaseParam.getDiscount() != vipInfo.getDiscount()) {
+//            return Optional.of("Your membership level does not match the discount!");
+//        }
         return Optional.empty();
     }
 
     private BigDecimal calucatePrice(PurchaseParam purchaseParam, VipInfo vipInfo) {
         BigDecimal price = purchaseParam.getUnitPrice().multiply(BigDecimal.valueOf(purchaseParam.getPurchaseAmount()));
-        if (purchaseParam.isHaveDiscount() && vipInfo != null) {
-            return price.multiply(BigDecimal.valueOf(vipInfo.getDiscount()));
-        }
+//        if (purchaseParam.isHaveDiscount() && vipInfo != null) {
+//            return price.multiply(BigDecimal.valueOf(vipInfo.getDiscount()));
+//        }
         return price;
     }
 
     private void seveOrderInfo(PurchaseParam purchaseParam, boolean payResult, BigDecimal payPrice) {
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setUserId(CommonUtils.getCurrentUserId());
-        orderInfo.setSoftwareId(purchaseParam.getSoftwareId());
-        orderInfo.setOrderStatus(payResult == true ? "0" : "1");
-        orderInfo.setOrderPrice(payPrice);
-        orderInfo.setDiscount(purchaseParam.getDiscount());
-        orderInfo.setPayTime(LocalDateTime.now());
+//        orderInfo.setUserId(CommonUtils.getCurrentUserId());
+//        orderInfo.setSoftwareId(purchaseParam.getSoftwareId());
+//        orderInfo.setOrderStatus(payResult == true ? "0" : "1");
+//        orderInfo.setOrderPrice(payPrice);
+//        orderInfo.setDiscount(purchaseParam.getDiscount());
+//        orderInfo.setPayTime(LocalDateTime.now());
         orderService.saveOrderInfo(orderInfo);
     }
 

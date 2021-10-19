@@ -1,19 +1,26 @@
 package com.tw.sellsoftware.software.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class SoftwareInfo {
+    private Integer id;
 
-    private String id;
     private String softwareName;
+
     private BigDecimal softwarePrice;
+
     private String softwareDescribe;
 
-    public String getId() {
+    private Date createTime;
+
+    private Date updateTime;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -22,7 +29,7 @@ public class SoftwareInfo {
     }
 
     public void setSoftwareName(String softwareName) {
-        this.softwareName = softwareName;
+        this.softwareName = softwareName == null ? null : softwareName.trim();
     }
 
     public BigDecimal getSoftwarePrice() {
@@ -38,6 +45,22 @@ public class SoftwareInfo {
     }
 
     public void setSoftwareDescribe(String softwareDescribe) {
-        this.softwareDescribe = softwareDescribe;
+        this.softwareDescribe = softwareDescribe == null ? null : softwareDescribe.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
