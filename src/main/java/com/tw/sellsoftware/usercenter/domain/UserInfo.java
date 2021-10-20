@@ -1,6 +1,6 @@
 package com.tw.sellsoftware.usercenter.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class UserInfo {
     private Integer id;
@@ -13,9 +13,9 @@ public class UserInfo {
 
     private String password;
 
-    private Date createTime;
+    private LocalDate createTime;
 
-    private Date updateTime;
+    private LocalDate updateTime;
 
     public Integer getId() {
         return id;
@@ -57,19 +57,19 @@ public class UserInfo {
         this.password = password == null ? null : password.trim();
     }
 
-    public Date getCreateTime() {
+    public LocalDate getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDate createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDate getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDate updateTime) {
         this.updateTime = updateTime;
     }
 }

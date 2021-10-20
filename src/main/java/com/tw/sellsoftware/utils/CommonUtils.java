@@ -15,24 +15,6 @@ public class CommonUtils {
         return "";
     }
 
-    public static List<VipInfo> getVipInfos() {
-        VipInfoService vipInfoService = () -> {
-            List<VipInfo> list = new ArrayList<>();
-            VipInfo vipInfo = new VipInfo();
-            vipInfo.setId("1");
-            vipInfo.setDiscount(0.8d);
-            vipInfo.setVipGrade("1");
-            list.add(vipInfo);
-            VipInfo vipInfo1 = new VipInfo();
-            vipInfo1.setId("2");
-            vipInfo1.setDiscount(0.6d);
-            vipInfo1.setVipGrade("2");
-            list.add(vipInfo1);
-            return list;
-        };
-        return vipInfoService.getVipInfo();
-    }
-
     public static boolean payResult(BigDecimal payPrice) {
         PayService payService = price -> {
             if (price.doubleValue() > 0) {

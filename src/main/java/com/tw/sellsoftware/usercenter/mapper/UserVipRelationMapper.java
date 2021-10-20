@@ -3,15 +3,11 @@ package com.tw.sellsoftware.usercenter.mapper;
 import com.tw.sellsoftware.usercenter.domain.UserVipRelation;
 
 public interface UserVipRelationMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(UserVipRelation record);
+    int insert(UserVipRelation userVipRelation);
 
-    int insertSelective(UserVipRelation record);
+    UserVipRelation selectById(Integer id);
 
-    UserVipRelation selectByPrimaryKey(Integer id);
+    UserVipRelation selectByUserId(Integer userId);
 
-    int updateByPrimaryKeySelective(UserVipRelation record);
-
-    int updateByPrimaryKey(UserVipRelation record);
 }

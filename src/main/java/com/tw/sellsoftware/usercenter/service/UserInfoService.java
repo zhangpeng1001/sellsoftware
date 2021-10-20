@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -14,23 +15,25 @@ public class UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    public UserInfo getUserByUserId(String userId) {
-        //TODO query user data from DB, condition is userId
-        return new UserInfo();
+    public UserInfo getUserByUserId(int userId) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(userId);
+        return userInfoMapper.selectUserInfo(userInfo);
     }
 
     public UserInfo getUserByUserName(String userName) {
-        //TODO query user data from DB, condition is userName
-        return new UserInfo();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName(userName);
+        return userInfoMapper.selectUserInfo(userInfo);
     }
 
     public UserInfo getUserByPhoneOrEmail(UserInfo userInfo) {
-        //TODO query user data from DB, condition is phone or email
-        return new UserInfo();
+        return userInfoMapper.getUserByPhoneOrEmail(userInfo);
     }
 
-    public void register(UserInfo userInfo) {
-        //TODO insert user data to DB
-        userInfoMapper.insertSelective(userInfo);
+    public int register(UserInfo userInfo) {
+        userInfo.setCreateTime(LocalDate.now());
+        userInfo.setUpdateTime(LocalDate.now());
+        return userInfoMapper.insertUserInfo(userInfo);
     }
 }

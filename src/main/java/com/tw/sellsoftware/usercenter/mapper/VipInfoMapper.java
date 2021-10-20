@@ -1,17 +1,13 @@
 package com.tw.sellsoftware.usercenter.mapper;
 
 import com.tw.sellsoftware.usercenter.domain.VipInfo;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface VipInfoMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(VipInfo record);
+    VipInfo selectVipInfoById(Integer id);
 
-    int insertSelective(VipInfo record);
+    VipInfo getRandomVipInfo();
 
-    VipInfo selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(VipInfo record);
-
-    int updateByPrimaryKey(VipInfo record);
 }

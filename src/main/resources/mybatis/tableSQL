@@ -59,3 +59,5 @@ CREATE TABLE `t_order_detail` (
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+//初始化VIP数据

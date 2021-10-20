@@ -3,15 +3,10 @@ package com.tw.sellsoftware.usercenter.mapper;
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
 
 public interface UserInfoMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(UserInfo record);
+    UserInfo selectUserInfo(UserInfo userInfo);
 
-    int insertSelective(UserInfo record);
+    UserInfo getUserByPhoneOrEmail(UserInfo userInfo);
 
-    UserInfo selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(UserInfo record);
-
-    int updateByPrimaryKey(UserInfo record);
+    int insertUserInfo(UserInfo record);
 }

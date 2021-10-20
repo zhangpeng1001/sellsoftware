@@ -1,6 +1,6 @@
 package com.tw.sellsoftware.usercenter.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class UserVipRelation {
     private Integer id;
@@ -9,9 +9,9 @@ public class UserVipRelation {
 
     private Integer vipId;
 
-    private Date createTime;
+    private LocalDate createTime;
 
-    private Date updateTime;
+    private LocalDate updateTime;
 
     public Integer getId() {
         return id;
@@ -37,19 +37,19 @@ public class UserVipRelation {
         this.vipId = vipId;
     }
 
-    public Date getCreateTime() {
+    public LocalDate getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDate createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDate getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDate updateTime) {
         this.updateTime = updateTime;
     }
 }
