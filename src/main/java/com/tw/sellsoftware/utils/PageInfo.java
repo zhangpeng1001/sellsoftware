@@ -10,7 +10,11 @@ public class PageInfo {
     }
 
     public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+        if (pageNum < 0) {
+            this.pageNum = 0;
+        } else {
+            this.pageNum = pageNum;
+        }
     }
 
     public int getPageSize() {
