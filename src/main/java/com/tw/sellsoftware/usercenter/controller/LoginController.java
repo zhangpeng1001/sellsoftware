@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -29,9 +30,6 @@ public class LoginController {
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(loginUserInfo,userInfo);
         Optional<String> optional = loginService.userLogin(userInfo,request);
-        if (optional.isPresent()) {
-            return new ResponseEntity(optional.get(), HttpStatus.OK);
-        }
-        return ResponseEntity.ok().build();
+        return new ResponseEntity(optional.isPresent()?optional.get():"", HttpStatus.OK);
     }
 }
