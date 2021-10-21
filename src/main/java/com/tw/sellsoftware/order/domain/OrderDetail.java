@@ -18,8 +18,6 @@ public class OrderDetail {
 
     private BigDecimal discount;
 
-    private LocalDateTime createTime;
-
     public Integer getId() {
         return id;
     }
@@ -68,11 +66,4 @@ public class OrderDetail {
         this.discount = discount;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
 }

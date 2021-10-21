@@ -17,8 +17,6 @@ public class OrderInfo {
 
     private LocalDateTime payTime;
 
-    private LocalDateTime createTime;
-
     private List<OrderDetail> detailList;
 
     public Integer getId() {
@@ -59,14 +57,6 @@ public class OrderInfo {
 
     public void setPayTime(LocalDateTime payTime) {
         this.payTime = payTime;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
     }
 
     public List<OrderDetail> getDetailList() {

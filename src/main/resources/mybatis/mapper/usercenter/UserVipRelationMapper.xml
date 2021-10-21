@@ -5,12 +5,9 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="vip_id" property="vipId" jdbcType="INTEGER"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id
-        , user_id, vip_id, create_time, update_time
+        id, user_id, vip_id
     </sql>
 
     <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -21,9 +18,7 @@
     </select>
 
     <insert id="insert" parameterType="com.tw.sellsoftware.usercenter.domain.UserVipRelation" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user_vip_relation (user_id, vip_id,
-                                         create_time, update_time)
-        values (#{userId,jdbcType=INTEGER}, #{vipId,jdbcType=INTEGER},
-                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+        insert into t_user_vip_relation (user_id, vip_id)
+        values (#{userId,jdbcType=INTEGER}, #{vipId,jdbcType=INTEGER})
     </insert>
 </mapper>

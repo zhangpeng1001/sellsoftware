@@ -56,7 +56,6 @@ public class PurchaseService {
         orderInfo.setOrderStatus(Constant.ORDER_STATUS_INIT);
         orderInfo.setOrderPrice(purchaseParam.getOrderPrice());
         orderInfo.setPayTime(LocalDateTime.now());
-        orderInfo.setCreateTime(LocalDateTime.now());
         orderInfoMapper.insertOrderInfo(orderInfo);
         List<OrderDetail> list = new ArrayList();
         for (OrderDetailParam detailParam : purchaseParam.getOrderDetailList()) {
@@ -66,7 +65,6 @@ public class PurchaseService {
             orderDetail.setSoftwareId(detailParam.getSoftwareId());
             orderDetail.setSoftwarePrice(detailParam.getSoftwarePrice());
             orderDetail.setDiscount(new BigDecimal(purchaseParam.getDiscount()));
-            orderDetail.setCreateTime(LocalDateTime.now());
             list.add(orderDetail);
         }
         orderDetailMapper.insertDetailBatch(list);

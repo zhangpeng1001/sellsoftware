@@ -6,11 +6,9 @@
     <result column="vip_grade" property="vipGrade" jdbcType="VARCHAR" />
     <result column="discount" property="discount" jdbcType="DECIMAL" />
     <result column="vip_desc" property="vipDesc" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, vip_grade, discount, vip_desc, create_time, update_time
+    id, vip_grade, discount, vip_desc
   </sql>
 
   <select id="selectVipInfoById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

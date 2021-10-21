@@ -6,11 +6,9 @@
     <result column="software_name" jdbcType="VARCHAR" property="softwareName" />
     <result column="software_price" jdbcType="DECIMAL" property="softwarePrice" />
     <result column="software_describe" jdbcType="VARCHAR" property="softwareDescribe" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, software_name, software_price, software_describe, create_time, update_time
+    id, software_name, software_price, software_describe
   </sql>
   <select id="querySoftwareById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

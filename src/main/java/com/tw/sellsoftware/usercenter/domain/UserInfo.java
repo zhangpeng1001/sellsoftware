@@ -13,10 +13,6 @@ public class UserInfo {
 
     private String password;
 
-    private LocalDate createTime;
-
-    private LocalDate updateTime;
-
     public Integer getId() {
         return id;
     }
@@ -55,21 +51,5 @@ public class UserInfo {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public LocalDate getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDate createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDate getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDate updateTime) {
-        this.updateTime = updateTime;
     }
 }

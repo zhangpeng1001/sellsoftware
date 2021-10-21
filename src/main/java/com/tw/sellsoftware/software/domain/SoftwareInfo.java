@@ -12,10 +12,6 @@ public class SoftwareInfo {
 
     private String softwareDescribe;
 
-    private Date createTime;
-
-    private Date updateTime;
-
     public Integer getId() {
         return id;
     }
@@ -46,21 +42,5 @@ public class SoftwareInfo {
 
     public void setSoftwareDescribe(String softwareDescribe) {
         this.softwareDescribe = softwareDescribe == null ? null : softwareDescribe.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }

@@ -8,10 +8,9 @@
     <result column="software_id" property="softwareId" jdbcType="INTEGER" />
     <result column="software_price" property="softwarePrice" jdbcType="DECIMAL" />
     <result column="discount" property="discount" jdbcType="DECIMAL" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, user_id, software_id, software_price, discount, create_time
+    id, order_id, user_id, software_id, software_price, discount
   </sql>
 
   <select id="queryOrderDetailByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -22,11 +21,11 @@
   </select>
 
   <insert id ="insertDetailBatch" parameterType="java.util.List" >
-    insert into t_order_detail (order_id, user_id,software_id, software_price, discount,create_time)
+    insert into t_order_detail (order_id, user_id,software_id, software_price, discount)
     values
     <foreach collection ="list" item="detail" index= "index" separator =",">
       (#{detail.orderId}, #{detail.userId},#{detail.softwareId},
-       #{detail.softwarePrice}, #{detail.discount},#{detail.createTime})
+       #{detail.softwarePrice}, #{detail.discount})
     </foreach >
   </insert >
 </mapper>

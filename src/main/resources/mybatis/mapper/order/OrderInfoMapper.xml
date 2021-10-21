@@ -7,13 +7,12 @@
     <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
     <result column="order_price" jdbcType="DECIMAL" property="orderPrice" />
     <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <collection property="detailList" ofType="com.tw.sellsoftware.order.domain.OrderDetail" column="id"
                 select="com.tw.sellsoftware.order.mapper.OrderDetailMapper.queryOrderDetailByOrderId">
     </collection>
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, order_status, order_price, pay_time, create_time, update_time
+    id, user_id, order_status, order_price, pay_time
   </sql>
 
   <select id="queryOrderList" resultMap="BaseResultMap">
@@ -24,8 +23,8 @@
 
   <insert id="insertOrderInfo" parameterType="com.tw.sellsoftware.order.domain.OrderInfo" useGeneratedKeys="true" keyProperty="id">
     insert into t_order_info (user_id, order_status,
-      order_price, pay_time, create_time)
+      order_price, pay_time)
     values (#{userId,jdbcType=INTEGER}, #{orderStatus,jdbcType=VARCHAR},
-      #{orderPrice,jdbcType=DECIMAL}, #{payTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+      #{orderPrice,jdbcType=DECIMAL}, #{payTime,jdbcType=TIMESTAMP})
   </insert>
 </mapper>

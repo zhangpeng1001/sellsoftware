@@ -39,8 +39,6 @@ public class RegisterService {
         UserVipRelation userVipRelation = new UserVipRelation();
         userVipRelation.setUserId(userInfo.getId());
         userVipRelation.setVipId(vipInfoService.getRandomVipInfo().getId());
-        userVipRelation.setCreateTime(LocalDate.now());
-        userVipRelation.setUpdateTime(LocalDate.now());
         userVipRelationService.insert(userVipRelation);
     }
 

@@ -26,8 +26,6 @@ public class UserInfoService {
     }
 
     public int register(UserInfo userInfo) {
-        userInfo.setCreateTime(LocalDate.now());
-        userInfo.setUpdateTime(LocalDate.now());
         return userInfoMapper.insertUserInfo(userInfo);
     }
 }
