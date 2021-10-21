@@ -45,18 +45,6 @@ public class RegisterService {
     }
 
     private Optional<String> userDataValidate(UserInfo userInfo) {
-        if (!StringUtils.hasLength(userInfo.getUserName())) {
-            return Optional.of("UserName is empty!");
-        }
-        if (!StringUtils.hasLength(userInfo.getPhone())) {
-            return Optional.of("User phone is empty!");
-        }
-        if (!StringUtils.hasLength(userInfo.getEmail())) {
-            return Optional.of("User Email is empty!");
-        }
-        if (!StringUtils.hasLength(userInfo.getPassword())) {
-            return Optional.of("User Password is empty!");
-        }
         UserInfo userInfoForDB = userInfoService.getUserByPhoneOrEmail(userInfo);
         if (userInfoForDB != null && StringUtils.hasLength(userInfoForDB.getPhone())) {
             return Optional.of("User phone already exists!");

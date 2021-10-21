@@ -1,11 +1,14 @@
 package com.tw.sellsoftware.usercenter.controller;
 
+import com.tw.sellsoftware.usercenter.domain.LoginUserInfo;
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.service.LoginService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +25,9 @@ public class LoginController {
     }
 
     @PostMapping("/userLogin")
-    public ResponseEntity userLogin(@RequestBody UserInfo userInfo,HttpServletRequest request) {
-        if (userInfo == null || !StringUtils.hasLength(userInfo.getUserName()) || !StringUtils.hasLength(userInfo.getPassword())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+    public ResponseEntity userLogin(@Validated @RequestBody LoginUserInfo loginUserInfo, HttpServletRequest request) {
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(loginUserInfo,userInfo);
         Optional<String> optional = loginService.userLogin(userInfo,request);
         if (optional.isPresent()) {
             return new ResponseEntity(optional.get(), HttpStatus.OK);
