@@ -1,82 +1,114 @@
 package com.tw.sellsoftware.order.service;
 
+import com.tw.sellsoftware.order.domain.OrderDetail;
+import com.tw.sellsoftware.order.domain.OrderDetailParam;
 import com.tw.sellsoftware.order.domain.OrderInfo;
 import com.tw.sellsoftware.order.domain.PurchaseParam;
-import com.tw.sellsoftware.usercenter.domain.UserInfo;
+import com.tw.sellsoftware.order.mapper.OrderDetailMapper;
+import com.tw.sellsoftware.order.mapper.OrderInfoMapper;
+import com.tw.sellsoftware.software.domain.SoftwareInfo;
+import com.tw.sellsoftware.software.mapper.SoftwareInfoMapper;
+import com.tw.sellsoftware.software.service.SoftwareInfoService;
+import com.tw.sellsoftware.usercenter.domain.UserVipRelation;
 import com.tw.sellsoftware.usercenter.domain.VipInfo;
-import com.tw.sellsoftware.usercenter.service.UserInfoService;
+import com.tw.sellsoftware.usercenter.mapper.UserVipRelationMapper;
+import com.tw.sellsoftware.usercenter.mapper.VipInfoMapper;
+import com.tw.sellsoftware.usercenter.service.UserVipRelationService;
+import com.tw.sellsoftware.usercenter.service.VipInfoService;
 import com.tw.sellsoftware.utils.CommonUtils;
+import com.tw.sellsoftware.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PurchaseService {
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserVipRelationService userVipRelationService;
 
     @Autowired
-    private OrderService orderService;
+    private VipInfoService vipInfoService;
 
-    public Optional<String> purchaseSoftware(PurchaseParam purchaseParam) {
-        VipInfo vipInfo = getVipInfo();
-        if (purchaseParam.isHaveDiscount()) {
-            Optional<String> valid = haveDiscountValid(purchaseParam, vipInfo);
-            if (valid.isPresent()) {
-                return valid;
-            }
+    @Autowired
+    private SoftwareInfoService softwareInfoService;
+
+    @Autowired
+    private OrderInfoMapper orderInfoMapper;
+
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+
+    public void purchaseSoftware(PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setUserId(CommonUtils.getCurrentUserId(request));
+        orderInfo.setOrderStatus(Constant.ORDER_STATUS_INIT);
+        orderInfo.setOrderPrice(purchaseParam.getOrderPrice());
+        orderInfo.setPayTime(LocalDateTime.now());
+        orderInfo.setCreateTime(LocalDateTime.now());
+        orderInfoMapper.insertOrderInfo(orderInfo);
+        List<OrderDetail> list = new ArrayList();
+        for (OrderDetailParam detailParam : purchaseParam.getOrderDetailList()) {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrderId(orderInfo.getId());
+            orderDetail.setUserId(CommonUtils.getCurrentUserId(request));
+            orderDetail.setSoftwareId(detailParam.getSoftwareId());
+            orderDetail.setSoftwarePrice(detailParam.getSoftwarePrice());
+            orderDetail.setDiscount(new BigDecimal(purchaseParam.getDiscount()));
+            orderDetail.setCreateTime(LocalDateTime.now());
+            list.add(orderDetail);
         }
-        BigDecimal payPrice = calucatePrice(purchaseParam, vipInfo);
-        boolean payResult = CommonUtils.payResult(payPrice);
-        seveOrderInfo(purchaseParam, payResult, payPrice);
-        if (!payResult) {
-            return Optional.of("Pay failed,please try again!");
-        }
-        return Optional.empty();
+        orderDetailMapper.insertDetailBatch(list);
     }
 
-    private VipInfo getVipInfo() {
-        //TODO need rewrite
-        return new VipInfo();
-//        UserInfo userInfo = userInfoService.getUserByUserId(CommonUtils.getCurrentUserId());
-//        return CommonUtils.getVipInfos().stream().filter(vipInfo -> vipInfo.getVipGrade().equals(userInfo.getVipGrade())).findFirst().orElse(null);
-    }
-
-    private Optional<String> haveDiscountValid(PurchaseParam purchaseParam, VipInfo vipInfo) {
-        if (purchaseParam.getDiscount() > 1) {
+    public Optional<String> purchaseParamValidate(PurchaseParam purchaseParam,HttpServletRequest request) throws Exception {
+        if (purchaseParam == null || purchaseParam.getOrderPrice() == null || purchaseParam.getOrderDetailList() == null || purchaseParam.getOrderDetailList().isEmpty()) {
             return Optional.of("Request parameter error!");
         }
-        if (vipInfo == null) {
-            return Optional.of("You are not a vip user,so cannot enjoy a discount!");
+        if (purchaseParam.getDiscount() > 1 || purchaseParam.getDiscount() <= 0) {
+            return Optional.of("Request parameter error!");
+        } else if (purchaseParam.getDiscount() < 1) {
+            UserVipRelation userVipRelation = userVipRelationService.selectByUserId(CommonUtils.getCurrentUserId(request));
+            if (userVipRelation == null) {
+                return Optional.of("You are not a vip user,so cannot enjoy a discount!");
+            }
+            VipInfo vipInfo = vipInfoService.selectVipInfoById(userVipRelation.getVipId());
+            if (vipInfo == null || vipInfo.getDiscount() == null) {
+                return Optional.of("You are not a vip user,so cannot enjoy a discount!");
+            }
+            if (BigDecimal.valueOf(purchaseParam.getDiscount()).compareTo(vipInfo.getDiscount()) != 0) {
+                return Optional.of("Your membership level does not match the discount!");
+            }
         }
-//        if (purchaseParam.getDiscount() != vipInfo.getDiscount()) {
-//            return Optional.of("Your membership level does not match the discount!");
-//        }
         return Optional.empty();
     }
 
-    private BigDecimal calucatePrice(PurchaseParam purchaseParam, VipInfo vipInfo) {
-        BigDecimal price = purchaseParam.getUnitPrice().multiply(BigDecimal.valueOf(purchaseParam.getPurchaseAmount()));
-//        if (purchaseParam.isHaveDiscount() && vipInfo != null) {
-//            return price.multiply(BigDecimal.valueOf(vipInfo.getDiscount()));
-//        }
-        return price;
-    }
-
-    private void seveOrderInfo(PurchaseParam purchaseParam, boolean payResult, BigDecimal payPrice) {
-        OrderInfo orderInfo = new OrderInfo();
-//        orderInfo.setUserId(CommonUtils.getCurrentUserId());
-//        orderInfo.setSoftwareId(purchaseParam.getSoftwareId());
-//        orderInfo.setOrderStatus(payResult == true ? "0" : "1");
-//        orderInfo.setOrderPrice(payPrice);
-//        orderInfo.setDiscount(purchaseParam.getDiscount());
-//        orderInfo.setPayTime(LocalDateTime.now());
-        orderService.saveOrderInfo(orderInfo);
+    public Optional<String> dataSafetyValidate(PurchaseParam purchaseParam) {
+        SoftwareInfo softwareInfo = null;
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        for (OrderDetailParam detailParam : purchaseParam.getOrderDetailList()) {
+            softwareInfo = softwareInfoService.querySoftwareById(detailParam.getSoftwareId());
+            if (softwareInfo == null || softwareInfo.getSoftwarePrice() == null) {
+                return Optional.of("Request parameter error!");
+            }
+            if (detailParam.getSoftwarePrice().compareTo(softwareInfo.getSoftwarePrice()) != 0) {
+                return Optional.of("Request parameter error!");
+            }
+            totalPrice = totalPrice.add(softwareInfo.getSoftwarePrice());
+        }
+        totalPrice = totalPrice.multiply(new BigDecimal(purchaseParam.getDiscount())).setScale(2, BigDecimal.ROUND_DOWN);
+        if (purchaseParam.getOrderPrice().compareTo(totalPrice) != 0) {
+            return Optional.of("Request parameter error!");
+        }
+        return Optional.empty();
     }
 
 }

@@ -15,12 +15,6 @@ public class UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    public UserInfo getUserByUserId(int userId) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setId(userId);
-        return userInfoMapper.selectUserInfo(userInfo);
-    }
-
     public UserInfo getUserByUserName(String userName) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName(userName);

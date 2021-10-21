@@ -34,7 +34,7 @@
     where phone = #{phone} or email = #{email}
   </select>
 
-  <insert id="insertUserInfo" parameterType="com.tw.sellsoftware.usercenter.domain.UserInfo">
+  <insert id="insertUserInfo" parameterType="com.tw.sellsoftware.usercenter.domain.UserInfo" useGeneratedKeys="true" keyProperty="id">
     insert into t_user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userName != null">

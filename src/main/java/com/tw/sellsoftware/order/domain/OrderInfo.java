@@ -1,7 +1,10 @@
 package com.tw.sellsoftware.order.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class OrderInfo {
     private Integer id;
@@ -12,11 +15,11 @@ public class OrderInfo {
 
     private BigDecimal orderPrice;
 
-    private Date payTime;
+    private LocalDateTime payTime;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date updateTime;
+    private List<OrderDetail> detailList;
 
     public Integer getId() {
         return id;
@@ -50,27 +53,27 @@ public class OrderInfo {
         this.orderPrice = orderPrice;
     }
 
-    public Date getPayTime() {
+    public LocalDateTime getPayTime() {
         return payTime;
     }
 
-    public void setPayTime(Date payTime) {
+    public void setPayTime(LocalDateTime payTime) {
         this.payTime = payTime;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public List<OrderDetail> getDetailList() {
+        return detailList;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setDetailList(List<OrderDetail> detailList) {
+        this.detailList = detailList;
     }
 }

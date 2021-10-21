@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
@@ -20,11 +21,16 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @PostMapping("/purchaseSoftware")
-    public ResponseEntity purchaseSoftware(@RequestBody PurchaseParam purchaseParam) {
-        Optional<String> optional = purchaseService.purchaseSoftware(purchaseParam);
+    public ResponseEntity purchaseSoftware(@RequestBody PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
+        Optional<String> optional = purchaseService.purchaseParamValidate(purchaseParam, request);
         if (optional.isPresent()) {
             return new ResponseEntity(optional.get(), HttpStatus.BAD_REQUEST);
         }
+        optional = purchaseService.dataSafetyValidate(purchaseParam);
+        if (optional.isPresent()) {
+            return new ResponseEntity(optional.get(), HttpStatus.BAD_REQUEST);
+        }
+        purchaseService.purchaseSoftware(purchaseParam, request);
         return new ResponseEntity("The purchase is successful and you can use it", HttpStatus.OK);
     }
 

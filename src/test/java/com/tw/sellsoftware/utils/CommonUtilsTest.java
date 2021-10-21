@@ -8,10 +8,10 @@ class CommonUtilsTest {
 
     private String emptyString = "";
 
-    @Test
-    void getCurrentUserId() {
-        assertEquals(emptyString, CommonUtils.getCurrentUserId());
-    }
+//    @Test
+//    void getCurrentUserId() {
+//        assertEquals(emptyString, CommonUtils.getCurrentUserId());
+//    }
 
     @Test
     void getVipInfos() {

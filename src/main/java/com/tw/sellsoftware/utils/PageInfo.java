@@ -4,6 +4,7 @@ public class PageInfo {
 
     private int pageNum;
     private int pageSize;
+    private int start;
 
     public int getPageNum() {
         return pageNum;
@@ -27,5 +28,9 @@ public class PageInfo {
         } else {
             this.pageSize = pageSize;
         }
+    }
+
+    public void getStart(int start) {
+        this.start = pageNum*pageSize;
     }
 }

@@ -88,10 +88,10 @@ class PurchaseServiceTest {
 
     private PurchaseParam getPurchaseParam() {
         PurchaseParam purchaseParam = new PurchaseParam();
-        purchaseParam.setHaveDiscount(false);
-        purchaseParam.setPurchaseAmount(2);
-        purchaseParam.setSoftwareId("1");
-        purchaseParam.setUnitPrice(BigDecimal.valueOf(1001));
+//        purchaseParam.setHaveDiscount(false);
+//        purchaseParam.setPurchaseAmount(2);
+//        purchaseParam.setSoftwareId("1");
+//        purchaseParam.setUnitPrice(BigDecimal.valueOf(1001));
         return purchaseParam;
     }
 }

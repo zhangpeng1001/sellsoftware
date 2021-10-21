@@ -1,6 +1,8 @@
 package com.tw.sellsoftware.order.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class OrderDetail {
@@ -16,7 +18,7 @@ public class OrderDetail {
 
     private BigDecimal discount;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
     public Integer getId() {
         return id;
@@ -66,11 +68,11 @@ public class OrderDetail {
         this.discount = discount;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 }

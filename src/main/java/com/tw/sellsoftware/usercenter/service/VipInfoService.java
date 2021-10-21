@@ -1,11 +1,23 @@
 package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.VipInfo;
+import com.tw.sellsoftware.usercenter.mapper.VipInfoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+@Service
+public class VipInfoService {
 
-@FunctionalInterface
-public interface VipInfoService {
+    @Autowired
+    private VipInfoMapper vipInfoMapper;
 
-    List<VipInfo> getVipInfo();
+
+    public VipInfo selectVipInfoById(Integer id) {
+        return vipInfoMapper.selectVipInfoById(id);
+    }
+
+    public VipInfo getRandomVipInfo() {
+        return vipInfoMapper.getRandomVipInfo();
+    }
+
 }

@@ -1,28 +1,17 @@
 package com.tw.sellsoftware.utils;
 
-import com.tw.sellsoftware.order.service.PayService;
-import com.tw.sellsoftware.usercenter.domain.VipInfo;
-import com.tw.sellsoftware.usercenter.service.VipInfoService;
+import com.tw.sellsoftware.usercenter.domain.UserInfo;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 public class CommonUtils {
 
-    public static String getCurrentUserId() {
-        //TODO need to obtain current user ID from session/redis
-        return "";
+    public static int getCurrentUserId(HttpServletRequest request) throws Exception {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(userInfo == null){
+            throw new Exception("userInfo is null!");
+        }
+        return userInfo.getId();
     }
 
-    public static boolean payResult(BigDecimal payPrice) {
-        PayService payService = price -> {
-            if (price.doubleValue() > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        };
-        return payService.pay(payPrice);
-    }
 }

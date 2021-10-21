@@ -16,9 +16,8 @@ public class SoftwareInfoService {
     @Autowired
     private SoftwareInfoMapper softwareInfoMapper;
 
-    public SoftwareInfo querySoftwareById(String softwareId) {
-        //TODO query software data from DB
-        return new SoftwareInfo();
+    public SoftwareInfo querySoftwareById(int softwareId) {
+        return softwareInfoMapper.querySoftwareById(softwareId);
     }
 
     public Optional<List<SoftwareInfo>> getSoftwareInfo(PageInfo pageInfo) {

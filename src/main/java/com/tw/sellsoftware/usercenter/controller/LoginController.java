@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
@@ -18,11 +19,11 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/userLogin")
-    public ResponseEntity userLogin(@RequestBody UserInfo userInfo) {
+    public ResponseEntity userLogin(@RequestBody UserInfo userInfo,HttpServletRequest request) {
         if (userInfo == null || !StringUtils.hasLength(userInfo.getUserName()) || !StringUtils.hasLength(userInfo.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        Optional<String> optional = loginService.userLogin(userInfo);
+        Optional<String> optional = loginService.userLogin(userInfo,request);
         if (optional.isPresent()) {
             return new ResponseEntity(optional.get(), HttpStatus.OK);
         }

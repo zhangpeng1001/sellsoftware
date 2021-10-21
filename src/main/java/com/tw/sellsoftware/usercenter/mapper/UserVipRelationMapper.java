@@ -6,8 +6,6 @@ public interface UserVipRelationMapper {
 
     int insert(UserVipRelation userVipRelation);
 
-    UserVipRelation selectById(Integer id);
-
     UserVipRelation selectByUserId(Integer userId);
 
 }

@@ -28,6 +28,6 @@ public class SoftwareInfoController {
         Optional<List<SoftwareInfo>> softwareList = softwareInfoService.getSoftwareInfo(pageInfo);
         return softwareList.isPresent()
                 ? ResponseEntity.ok(softwareList.get())
-                : ResponseEntity.notFound().build();
+                : ResponseEntity.ok(null);
     }
 }

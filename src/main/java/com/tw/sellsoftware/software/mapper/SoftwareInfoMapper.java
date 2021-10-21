@@ -9,15 +9,6 @@ public interface SoftwareInfoMapper {
 
     List<SoftwareInfo> querySoftwareInfo(PageInfo pageInfo);
 
-    int deleteByPrimaryKey(Integer id);
+    SoftwareInfo querySoftwareById(Integer id);
 
-    int insert(SoftwareInfo record);
-
-    int insertSelective(SoftwareInfo record);
-
-    SoftwareInfo selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SoftwareInfo record);
-
-    int updateByPrimaryKey(SoftwareInfo record);
 }

@@ -20,10 +20,10 @@ public class RegisterService {
     private UserInfoService userInfoService;
 
     @Autowired
-    private VipInfoMapper vipInfoMapper;
+    private VipInfoService vipInfoService;
 
     @Autowired
-    private UserVipRelationMapper userVipRelationMapper;
+    private UserVipRelationService userVipRelationService;
 
 
     public Optional<String> userRegister(UserInfo userInfo) {
@@ -36,13 +36,13 @@ public class RegisterService {
     }
 
     private void register(UserInfo userInfo) {
-        int userId = userInfoService.register(userInfo);
+        userInfoService.register(userInfo);
         UserVipRelation userVipRelation = new UserVipRelation();
-        userVipRelation.setUserId(userId);
-        userVipRelation.setVipId(vipInfoMapper.getRandomVipInfo().getId());
+        userVipRelation.setUserId(userInfo.getId());
+        userVipRelation.setVipId(vipInfoService.getRandomVipInfo().getId());
         userVipRelation.setCreateTime(LocalDate.now());
         userVipRelation.setUpdateTime(LocalDate.now());
-        userVipRelationMapper.insert(userVipRelation);
+        userVipRelationService.insert(userVipRelation);
     }
 
     private Optional<String> userDataValidate(UserInfo userInfo) {

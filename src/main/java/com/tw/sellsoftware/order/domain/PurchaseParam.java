@@ -1,38 +1,15 @@
 package com.tw.sellsoftware.order.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PurchaseParam {
 
-    private String softwareId;
-    private int purchaseAmount;
-    private BigDecimal unitPrice;
     private double discount;
-    private boolean haveDiscount;
 
-    public String getSoftwareId() {
-        return softwareId;
-    }
+    private BigDecimal orderPrice;
 
-    public void setSoftwareId(String softwareId) {
-        this.softwareId = softwareId;
-    }
-
-    public int getPurchaseAmount() {
-        return purchaseAmount;
-    }
-
-    public void setPurchaseAmount(int purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
-    }
-
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
+    List<OrderDetailParam> orderDetailList;
 
     public double getDiscount() {
         return discount;
@@ -42,11 +19,19 @@ public class PurchaseParam {
         this.discount = discount;
     }
 
-    public boolean isHaveDiscount() {
-        return haveDiscount;
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setHaveDiscount(boolean haveDiscount) {
-        this.haveDiscount = haveDiscount;
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public List<OrderDetailParam> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetailParam> orderDetailList) {
+        this.orderDetailList = orderDetailList;
     }
 }
