@@ -13,8 +13,11 @@ import java.util.Optional;
 @Service
 public class SoftwareInfoService {
 
-    @Autowired
-    private SoftwareInfoMapper softwareInfoMapper;
+    private final SoftwareInfoMapper softwareInfoMapper;
+
+    public SoftwareInfoService(SoftwareInfoMapper softwareInfoMapper) {
+        this.softwareInfoMapper = softwareInfoMapper;
+    }
 
     public SoftwareInfo querySoftwareById(int softwareId) {
         return softwareInfoMapper.querySoftwareById(softwareId);
@@ -25,7 +28,7 @@ public class SoftwareInfoService {
     }
 
     private List<SoftwareInfo> querySoftwareInfo(PageInfo pageInfo) {
-       return softwareInfoMapper.querySoftwareInfo(pageInfo);
+        return softwareInfoMapper.querySoftwareInfo(pageInfo);
     }
 
 

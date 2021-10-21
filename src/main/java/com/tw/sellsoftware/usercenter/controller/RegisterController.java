@@ -15,8 +15,11 @@ import java.util.Optional;
 @RequestMapping("/register")
 public class RegisterController {
 
-    @Autowired
-    private RegisterService registerService;
+    private final RegisterService registerService;
+
+    public RegisterController(RegisterService registerService) {
+        this.registerService = registerService;
+    }
 
     @PostMapping("/userRegister")
     public ResponseEntity userRegister(@RequestBody UserInfo userInfo) {

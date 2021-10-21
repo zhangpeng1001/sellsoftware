@@ -17,8 +17,11 @@ import java.util.Optional;
 @RequestMapping("/software")
 public class SoftwareInfoController {
 
-    @Autowired
-    private SoftwareInfoService softwareInfoService;
+    private final SoftwareInfoService softwareInfoService;
+
+    public SoftwareInfoController(SoftwareInfoService softwareInfoService){
+        this.softwareInfoService = softwareInfoService;
+    }
 
     @GetMapping("/list/{pageNum}/{pageSize}")
     public ResponseEntity getSoftwareInfo(@PathVariable int pageNum, @PathVariable int pageSize) {

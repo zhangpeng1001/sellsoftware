@@ -32,20 +32,23 @@ import java.util.Optional;
 @Transactional
 public class PurchaseService {
 
-    @Autowired
-    private UserVipRelationService userVipRelationService;
+    private final UserVipRelationService userVipRelationService;
 
-    @Autowired
-    private VipInfoService vipInfoService;
+    private final VipInfoService vipInfoService;
 
-    @Autowired
-    private SoftwareInfoService softwareInfoService;
+    private final SoftwareInfoService softwareInfoService;
 
-    @Autowired
-    private OrderInfoMapper orderInfoMapper;
+    private final OrderInfoMapper orderInfoMapper;
 
-    @Autowired
-    private OrderDetailMapper orderDetailMapper;
+    private final OrderDetailMapper orderDetailMapper;
+
+    public PurchaseService(UserVipRelationService userVipRelationService, VipInfoService vipInfoService, SoftwareInfoService softwareInfoService, OrderInfoMapper orderInfoMapper, OrderDetailMapper orderDetailMapper) {
+        this.userVipRelationService = userVipRelationService;
+        this.vipInfoService = vipInfoService;
+        this.softwareInfoService = softwareInfoService;
+        this.orderInfoMapper = orderInfoMapper;
+        this.orderDetailMapper = orderDetailMapper;
+    }
 
     public void purchaseSoftware(PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
         OrderInfo orderInfo = new OrderInfo();
@@ -69,7 +72,7 @@ public class PurchaseService {
         orderDetailMapper.insertDetailBatch(list);
     }
 
-    public Optional<String> purchaseParamValidate(PurchaseParam purchaseParam,HttpServletRequest request) throws Exception {
+    public Optional<String> purchaseParamValidate(PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
         if (purchaseParam == null || purchaseParam.getOrderPrice() == null || purchaseParam.getOrderDetailList() == null || purchaseParam.getOrderDetailList().isEmpty()) {
             return Optional.of("Request parameter error!");
         }

@@ -15,8 +15,11 @@ import java.util.Optional;
 @RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
+    private final LoginService loginService;
+
+    public LoginController(LoginService loginService){
+        this.loginService = loginService;
+    }
 
     @PostMapping("/userLogin")
     public ResponseEntity userLogin(@RequestBody UserInfo userInfo,HttpServletRequest request) {

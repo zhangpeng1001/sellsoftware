@@ -14,8 +14,11 @@ import java.util.Optional;
 @Service
 public class LoginService {
 
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
+
+    public LoginService(UserInfoService userInfoService){
+        this.userInfoService = userInfoService;
+    }
 
     public Optional<String> userLogin(UserInfo userInfo, HttpServletRequest request) {
         UserInfo userInfoForDB = userInfoService.getUserByUserName(userInfo.getUserName());

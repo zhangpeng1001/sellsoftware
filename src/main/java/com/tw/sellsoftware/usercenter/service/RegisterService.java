@@ -2,9 +2,6 @@ package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.domain.UserVipRelation;
-import com.tw.sellsoftware.usercenter.mapper.UserVipRelationMapper;
-import com.tw.sellsoftware.usercenter.mapper.VipInfoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -16,15 +13,17 @@ import java.util.Optional;
 @Transactional
 public class RegisterService {
 
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
 
-    @Autowired
-    private VipInfoService vipInfoService;
+    private final VipInfoService vipInfoService;
 
-    @Autowired
-    private UserVipRelationService userVipRelationService;
+    private final UserVipRelationService userVipRelationService;
 
+    public RegisterService(UserInfoService userInfoService, VipInfoService vipInfoService, UserVipRelationService userVipRelationService) {
+        this.userInfoService = userInfoService;
+        this.vipInfoService = vipInfoService;
+        this.userVipRelationService = userVipRelationService;
+    }
 
     public Optional<String> userRegister(UserInfo userInfo) {
         Optional<String> optional = userDataValidate(userInfo);

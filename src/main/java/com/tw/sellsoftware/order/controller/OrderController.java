@@ -19,8 +19,12 @@ import java.util.Optional;
 @RequestMapping("/order")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService){
+        this.orderService = orderService;
+    }
+
 
     @GetMapping("/list/{pageNum}/{pageSize}")
     public ResponseEntity getHistoryOrderInfo(@PathVariable int pageNum, @PathVariable int pageSize, HttpServletRequest request) throws Exception {

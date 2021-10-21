@@ -14,8 +14,11 @@ import java.util.Optional;
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderInfoMapper orderInfoMapper;
+    private final OrderInfoMapper orderInfoMapper;
+
+    public OrderService(OrderInfoMapper orderInfoMapper) {
+        this.orderInfoMapper = orderInfoMapper;
+    }
 
     public Optional<List<OrderInfo>> getHistoryOrderInfo(PageInfo pageInfo, HttpServletRequest request) throws Exception {
         return Optional.ofNullable(orderInfoMapper.queryOrderList(pageInfo, CommonUtils.getCurrentUserId(request)));

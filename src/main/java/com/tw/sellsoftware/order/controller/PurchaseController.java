@@ -17,8 +17,11 @@ import java.util.Optional;
 @RequestMapping("/purchase")
 public class PurchaseController {
 
-    @Autowired
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
+
+    public PurchaseController(PurchaseService purchaseService){
+        this.purchaseService = purchaseService;
+    }
 
     @PostMapping("/purchaseSoftware")
     public ResponseEntity purchaseSoftware(@RequestBody PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
