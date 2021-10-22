@@ -1,63 +1,70 @@
 CREATE TABLE `t_user_info` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(128)  NOT NULL,
-  `email` varchar(64),
-  `phone` varchar(32),
-  `password` varchar(255)  NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(128) NOT NULL,
+  `email` varchar(64) ,
+  `phone` varchar(32) ,
+  `password` varchar(255) , NOT NULL,
+  `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `t_vip_info` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `vip_grade` varchar(10)  NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `vip_grade` varchar(10) NOT NULL,
   `discount` decimal(10,2) NOT NULL,
-  `vip_desc` varchar(255),
-  `create_time` datetime NOT NULL,
-  `update_time` datetime,
+  `vip_desc` varchar(255) ,
+  `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `t_user_vip_relation` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `vip_id` int NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime,
+  `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `t_software_info` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `software_name` varchar(128)  NOT NULL,
   `software_price` decimal(10,2) NOT NULL,
-  `software_describe` varchar(1024),
-  `create_time` datetime NOT NULL,
-  `update_time` datetime,
+  `software_describe` varchar(1024) ,
+  `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `t_order_info` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `order_status` varchar(2)  NOT NULL DEFAULT '0' COMMENT '0:init;1:success;2:failure',
+  `order_status` varchar(2) NOT NULL DEFAULT '0' COMMENT '0:init;1:success;2:failure',
   `order_price` decimal(10,2) NOT NULL,
-  `pay_time` datetime,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime,
+  `pay_time` datetime ,
+  `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `t_order_detail` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int NOT NULL,
   `user_id` int NOT NULL,
   `software_id` int NOT NULL,
   `software_price` decimal(10,2) NOT NULL,
   `discount` decimal(10,2),
-  `create_time` datetime NOT NULL,
+  `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
-//初始化VIP数据
+
+INSERT INTO `t_vip_info` (`id`, `vip_grade`, `discount`, `vip_desc`, `create_time`, `update_time`) VALUES (1, '1', 0.80, '白银会员', '2021-10-20 14:57:12', '2021-10-20 14:57:46');
+INSERT INTO `t_vip_info` (`id`, `vip_grade`, `discount`, `vip_desc`, `create_time`, `update_time`) VALUES (2, '2', 0.60, '黄金会员', '2021-10-20 14:57:40', '2021-10-20 14:57:43');
+INSERT INTO `t_vip_info` (`id`, `vip_grade`, `discount`, `vip_desc`, `create_time`, `update_time`) VALUES (3, '3', 0.50, '铂金会员', '2021-10-20 14:58:11', '2021-10-20 14:58:14');
+
+INSERT INTO `t_software_info` (`id`, `software_name`, `software_price`, `software_describe`, `create_time`, `update_time`) VALUES (1, '用友', 500.00, '用友软件详细描述如下', '2021-10-19 17:44:19', '2021-10-19 17:44:19');
+INSERT INTO `t_software_info` (`id`, `software_name`, `software_price`, `software_describe`, `create_time`, `update_time`) VALUES (2, '金碟', 100.00, '金碟系统', '2021-10-21 10:52:23', '2021-10-21 10:52:23');
+
