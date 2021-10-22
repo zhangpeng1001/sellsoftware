@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -43,7 +42,10 @@ public class RegisterService {
     }
 
     private Optional<String> userDataValidate(UserInfo userInfo) {
-        UserInfo userInfoForDB = userInfoService.getUserByPhoneOrEmail(userInfo);
+        UserInfo userInfoForDB = userInfoService.getUserByNameOrPhoneOrEmail(userInfo);
+        if (userInfoForDB != null && StringUtils.hasLength(userInfoForDB.getUserName())) {
+            return Optional.of("User name already exists!");
+        }
         if (userInfoForDB != null && StringUtils.hasLength(userInfoForDB.getPhone())) {
             return Optional.of("User phone already exists!");
         }

@@ -21,8 +21,8 @@ public class UserInfoService {
         return userInfoMapper.selectUserInfo(userInfo);
     }
 
-    public UserInfo getUserByPhoneOrEmail(UserInfo userInfo) {
-        return userInfoMapper.getUserByPhoneOrEmail(userInfo);
+    public UserInfo getUserByNameOrPhoneOrEmail(UserInfo userInfo) {
+        return userInfoMapper.getUserByNameOrPhoneOrEmail(userInfo);
     }
 
     public int register(UserInfo userInfo) {

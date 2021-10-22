@@ -6,7 +6,7 @@ public interface UserInfoMapper {
 
     UserInfo selectUserInfo(UserInfo userInfo);
 
-    UserInfo getUserByPhoneOrEmail(UserInfo userInfo);
+    UserInfo getUserByNameOrPhoneOrEmail(UserInfo userInfo);
 
     int insertUserInfo(UserInfo record);
 }
