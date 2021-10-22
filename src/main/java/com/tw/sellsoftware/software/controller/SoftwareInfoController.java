@@ -24,7 +24,7 @@ public class SoftwareInfoController {
     }
 
     @GetMapping("/list/{pageNum}/{pageSize}")
-    public ResponseEntity getSoftwareInfo(@PathVariable int pageNum, @PathVariable int pageSize) {
+    public ResponseEntity getSoftwareInfo(@PathVariable int pageNum, @PathVariable int pageSize) throws Exception {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
