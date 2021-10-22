@@ -1,7 +1,5 @@
 package com.tw.sellsoftware.usercenter.domain;
 
-import java.time.LocalDate;
-
 public class UserVipRelation {
     private Integer id;
 

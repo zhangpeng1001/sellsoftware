@@ -42,14 +42,14 @@ public class RegisterService {
     }
 
     private Optional<String> userDataValidate(UserInfo userInfo) {
-        UserInfo userInfoForDB = userInfoService.getUserByNameOrPhoneOrEmail(userInfo);
-        if (userInfoForDB != null && StringUtils.hasLength(userInfoForDB.getUserName())) {
+        UserInfo userInfoForDB = userInfoService.getUserByNameOrPhoneOrEmail(userInfo.getUserName(), userInfo.getPhone(), userInfo.getEmail());
+        if (userInfoForDB != null && userInfo.getUserName().equals(userInfoForDB.getUserName())) {
             return Optional.of("User name already exists!");
         }
-        if (userInfoForDB != null && StringUtils.hasLength(userInfoForDB.getPhone())) {
+        if (userInfoForDB != null && userInfo.getPhone().equals(userInfoForDB.getPhone())) {
             return Optional.of("User phone already exists!");
         }
-        if (userInfoForDB != null && StringUtils.hasLength(userInfoForDB.getEmail())) {
+        if (userInfoForDB != null && userInfo.getEmail().equals(userInfoForDB.getEmail())) {
             return Optional.of("User Email already exists!");
         }
         return Optional.empty();

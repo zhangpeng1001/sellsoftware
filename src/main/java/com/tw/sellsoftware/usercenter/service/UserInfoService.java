@@ -4,8 +4,6 @@ import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.mapper.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class UserInfoService {
 
@@ -16,13 +14,11 @@ public class UserInfoService {
     }
 
     public UserInfo getUserByUserName(String userName) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName(userName);
-        return userInfoMapper.selectUserInfo(userInfo);
+        return userInfoMapper.getUserByUserName(userName);
     }
 
-    public UserInfo getUserByNameOrPhoneOrEmail(UserInfo userInfo) {
-        return userInfoMapper.getUserByNameOrPhoneOrEmail(userInfo);
+    public UserInfo getUserByNameOrPhoneOrEmail(String userName, String phone, String email) {
+        return userInfoMapper.getUserByNameOrPhoneOrEmail(userName, phone, email);
     }
 
     public int register(UserInfo userInfo) {
