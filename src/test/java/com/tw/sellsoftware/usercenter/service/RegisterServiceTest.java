@@ -24,7 +24,7 @@ class RegisterServiceTest {
     @Test
     void userRegisterForSuccess() {
 //        UserInfo userInfo = getUserInfo();
-//        Mockito.when(userInfoService.getUserByPhoneOrEmail(userInfo)).thenReturn(new UserInfo());
+//        Mockito.when(userInfoService.getUserByNameOrPhoneOrEmail(Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).thenReturn(new UserInfo());
 //        assertEquals(registerService.userRegister(userInfo).isPresent(), false);
     }
 
