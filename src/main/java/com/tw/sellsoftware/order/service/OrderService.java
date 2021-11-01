@@ -20,7 +20,7 @@ public class OrderService {
         this.orderInfoMapper = orderInfoMapper;
     }
 
-    public Optional<List<OrderInfo>> getHistoryOrderInfo(PageInfo pageInfo, HttpServletRequest request) throws Exception {
+    public Optional<List<OrderInfo>> getHistoryOrderInfo(PageInfo pageInfo, HttpServletRequest request) {
         return Optional.ofNullable(orderInfoMapper.queryOrderList(pageInfo, CommonUtils.getCurrentUserId(request)));
     }
 
