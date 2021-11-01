@@ -7,26 +7,21 @@ import com.tw.sellsoftware.order.domain.PurchaseParam;
 import com.tw.sellsoftware.order.mapper.OrderDetailMapper;
 import com.tw.sellsoftware.order.mapper.OrderInfoMapper;
 import com.tw.sellsoftware.software.domain.SoftwareInfo;
-import com.tw.sellsoftware.software.mapper.SoftwareInfoMapper;
 import com.tw.sellsoftware.software.service.SoftwareInfoService;
 import com.tw.sellsoftware.usercenter.domain.UserVipRelation;
 import com.tw.sellsoftware.usercenter.domain.VipInfo;
-import com.tw.sellsoftware.usercenter.mapper.UserVipRelationMapper;
-import com.tw.sellsoftware.usercenter.mapper.VipInfoMapper;
 import com.tw.sellsoftware.usercenter.service.UserVipRelationService;
 import com.tw.sellsoftware.usercenter.service.VipInfoService;
 import com.tw.sellsoftware.utils.CommonUtils;
 import com.tw.sellsoftware.utils.Constant;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -58,17 +53,15 @@ public class PurchaseService {
         orderInfo.setOrderPrice(purchaseParam.getOrderPrice());
         orderInfo.setPayTime(LocalDateTime.now());
         orderInfoMapper.insertOrderInfo(orderInfo);
-        List<OrderDetail> list = new ArrayList();
-        purchaseParam.getOrderDetailList().forEach(detailParam -> {
+        orderDetailMapper.insertDetailBatch(purchaseParam.getOrderDetailList().stream().map(detailParam->{
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderId(orderInfo.getId());
             orderDetail.setUserId(currentUserId);
             orderDetail.setSoftwareId(detailParam.getSoftwareId());
             orderDetail.setSoftwarePrice(detailParam.getSoftwarePrice());
             orderDetail.setDiscount(new BigDecimal(purchaseParam.getDiscount()));
-            list.add(orderDetail);
-        });
-        orderDetailMapper.insertDetailBatch(list);
+            return orderDetail;
+        }).collect(Collectors.toList()));
     }
 
     public Optional<String> purchaseParamValidate(PurchaseParam purchaseParam, HttpServletRequest request) {
