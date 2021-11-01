@@ -50,27 +50,28 @@ public class PurchaseService {
         this.orderDetailMapper = orderDetailMapper;
     }
 
-    public void purchaseSoftware(PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
+    public void purchaseSoftware(PurchaseParam purchaseParam, HttpServletRequest request) {
+        int currentUserId = CommonUtils.getCurrentUserId(request);
         OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setUserId(CommonUtils.getCurrentUserId(request));
+        orderInfo.setUserId(currentUserId);
         orderInfo.setOrderStatus(Constant.ORDER_STATUS_INIT);
         orderInfo.setOrderPrice(purchaseParam.getOrderPrice());
         orderInfo.setPayTime(LocalDateTime.now());
         orderInfoMapper.insertOrderInfo(orderInfo);
         List<OrderDetail> list = new ArrayList();
-        for (OrderDetailParam detailParam : purchaseParam.getOrderDetailList()) {
+        purchaseParam.getOrderDetailList().forEach(detailParam -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderId(orderInfo.getId());
-            orderDetail.setUserId(CommonUtils.getCurrentUserId(request));
+            orderDetail.setUserId(currentUserId);
             orderDetail.setSoftwareId(detailParam.getSoftwareId());
             orderDetail.setSoftwarePrice(detailParam.getSoftwarePrice());
             orderDetail.setDiscount(new BigDecimal(purchaseParam.getDiscount()));
             list.add(orderDetail);
-        }
+        });
         orderDetailMapper.insertDetailBatch(list);
     }
 
-    public Optional<String> purchaseParamValidate(PurchaseParam purchaseParam, HttpServletRequest request) throws Exception {
+    public Optional<String> purchaseParamValidate(PurchaseParam purchaseParam, HttpServletRequest request) {
         if (purchaseParam == null || purchaseParam.getOrderPrice() == null || purchaseParam.getOrderDetailList() == null || purchaseParam.getOrderDetailList().isEmpty()) {
             return Optional.of("Request parameter error!");
         }
