@@ -1,7 +1,7 @@
 package com.tw.sellsoftware.usercenter.controller;
 
-import com.tw.sellsoftware.usercenter.domain.LoginUserInfo;
 import com.tw.sellsoftware.usercenter.service.LoginService;
+import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -37,19 +37,13 @@ class LoginControllerTest {
 
     @Test
     void userLoginForSuccess() {
-        LoginUserInfo userInfo = new LoginUserInfo();
-        userInfo.setUserName("testUser");
-        userInfo.setPassword("123456");
         Mockito.when(loginService.userLogin(Mockito.any(),Mockito.any())).thenReturn(Optional.empty());
-        assertEquals(loginController.userLogin(userInfo,request).getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK,loginController.userLogin(new LoginUserInfo(),request).getStatusCode());
     }
 
     @Test
     void userLoginForFail() {
-        LoginUserInfo userInfo = new LoginUserInfo();
-        userInfo.setUserName("testUser");
-        userInfo.setPassword("123456");
         Mockito.when(loginService.userLogin(Mockito.any(),Mockito.any())).thenReturn(Optional.of("error msg"));
-        assertEquals(loginController.userLogin(userInfo,request).getBody(), "error msg");
+        assertEquals(HttpStatus.BAD_REQUEST,loginController.userLogin(new LoginUserInfo(),request).getStatusCode());
     }
 }

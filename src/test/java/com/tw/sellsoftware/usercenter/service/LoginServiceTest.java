@@ -1,7 +1,7 @@
 package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
-import org.junit.Before;
+import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -34,27 +35,33 @@ class LoginServiceTest {
         request.setCharacterEncoding("UTF-8");
         session = new MockHttpSession();
         session.setAttribute("","");
-        UserInfo userInfo = getUserInfo();
+        LoginUserInfo userInfo = getUserInfo();
         Mockito.when(userInfoService.getUserByUserName("testUser")).thenReturn(getUserInfoForDB());
         assertEquals(loginService.userLogin(userInfo,request).isPresent(), false);
     }
 
     @Test
-    void userLoginForFail() {
+    void userLoginFailureOfUserNotExist() {
         request = new MockHttpServletRequest();
         request.setCharacterEncoding("UTF-8");
-        UserInfo userInfo = getUserInfo();
+        LoginUserInfo userInfo = getUserInfo();
         Mockito.when(userInfoService.getUserByUserName("testUser")).thenReturn(null);
-        assertEquals(loginService.userLogin(userInfo,request).isPresent(), true);
-        UserInfo userInfoForDB = new UserInfo();
-        userInfoForDB.setUserName("testUser");
-        userInfoForDB.setPassword("abcde");
-        Mockito.when(userInfoService.getUserByUserName("testUser")).thenReturn(userInfoForDB);
-        assertEquals(loginService.userLogin(userInfo,request).isPresent(), true);
+        assertTrue(loginService.userLogin(userInfo, request).isPresent());
     }
 
-    private UserInfo getUserInfo() {
-        UserInfo userInfo = new UserInfo();
+    @Test
+    void userLoginFailureOfErrorPassword() {
+        request = new MockHttpServletRequest();
+        request.setCharacterEncoding("UTF-8");
+        LoginUserInfo userInfo = getUserInfo();
+        UserInfo userInfoForDB = new UserInfo();
+        userInfoForDB.setPassword("abcde");
+        Mockito.when(userInfoService.getUserByUserName("testUser")).thenReturn(userInfoForDB);
+        assertTrue(loginService.userLogin(userInfo, request).isPresent());
+    }
+
+    private LoginUserInfo getUserInfo() {
+        LoginUserInfo userInfo = new LoginUserInfo();
         userInfo.setUserName("testUser");
         userInfo.setPassword("123456");
         return userInfo;

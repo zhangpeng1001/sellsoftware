@@ -1,14 +1,10 @@
 package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,7 +16,7 @@ public class LoginService {
         this.userInfoService = userInfoService;
     }
 
-    public Optional<String> userLogin(UserInfo userInfo, HttpServletRequest request) {
+    public Optional<String> userLogin(LoginUserInfo userInfo, HttpServletRequest request) {
         UserInfo userInfoForDB = userInfoService.getUserByUserName(userInfo.getUserName());
         if(userInfoForDB == null){
             return Optional.of("User does not exist!");

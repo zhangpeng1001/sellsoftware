@@ -1,4 +1,4 @@
-package com.tw.sellsoftware.usercenter.domain;
+package com.tw.sellsoftware.usercenter.vo;
 
 import javax.validation.constraints.NotEmpty;
 

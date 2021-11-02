@@ -1,18 +1,16 @@
 package com.tw.sellsoftware.usercenter.controller;
 
-import com.tw.sellsoftware.usercenter.domain.LoginUserInfo;
-import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.service.LoginService;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -27,9 +25,7 @@ public class LoginController {
 
     @PostMapping("/userLogin")
     public ResponseEntity userLogin(@Validated @RequestBody LoginUserInfo loginUserInfo, HttpServletRequest request) {
-        UserInfo userInfo = new UserInfo();
-        BeanUtils.copyProperties(loginUserInfo,userInfo);
-        Optional<String> optional = loginService.userLogin(userInfo,request);
-        return new ResponseEntity(optional.isPresent()?optional.get():"", HttpStatus.OK);
+        Optional<String> optional = loginService.userLogin(loginUserInfo,request);
+        return optional.map(str -> new ResponseEntity(str, HttpStatus.BAD_REQUEST)).orElse(new ResponseEntity(HttpStatus.OK));
     }
 }
