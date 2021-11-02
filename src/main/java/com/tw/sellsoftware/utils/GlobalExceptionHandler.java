@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(BindException.class)
     public ResponseEntity handleBindException(BindException ex) {
         StringBuilder strb = new StringBuilder();
         ex.getBindingResult().getAllErrors().stream().forEach(error -> strb.append(error.getDefaultMessage()).append(";"));
         return new ResponseEntity(strb.toString(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SellSoftwareException.class)
+    public ResponseEntity handleSellSoftwareException(SellSoftwareException ex) {
+        return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,8 +1,10 @@
 package com.tw.sellsoftware.usercenter.controller;
 
+import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.service.LoginService;
 import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
-import org.junit.Before;
+import com.tw.sellsoftware.utils.SellSoftwareException;
+import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,11 +13,11 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -29,21 +31,20 @@ class LoginControllerTest {
 
     private MockHttpServletRequest request;
 
-    @Before
-    void beforeMethod(){
-        request = new MockHttpServletRequest();
-        request.setCharacterEncoding("UTF-8");
-    }
+    private MockHttpSession session;
 
     @Test
     void userLoginForSuccess() {
-        Mockito.when(loginService.userLogin(Mockito.any(),Mockito.any())).thenReturn(Optional.empty());
-        assertEquals(HttpStatus.OK,loginController.userLogin(new LoginUserInfo(),request).getStatusCode());
+        request = new MockHttpServletRequest();
+        request.setCharacterEncoding("UTF-8");
+        session = new MockHttpSession();
+        Mockito.when(loginService.userLogin(Mockito.any())).thenReturn(new UserInfo());
+        assertEquals(HttpStatus.OK, loginController.userLogin(new LoginUserInfo(), request).getStatusCode());
     }
 
     @Test
     void userLoginForFail() {
-        Mockito.when(loginService.userLogin(Mockito.any(),Mockito.any())).thenReturn(Optional.of("error msg"));
-        assertEquals(HttpStatus.BAD_REQUEST,loginController.userLogin(new LoginUserInfo(),request).getStatusCode());
+        Mockito.when(loginService.userLogin(Mockito.any())).thenThrow(new SellSoftwareException(SellSoftwareExceptionEnum.USER_NOT_EXIST));
+        assertThrows(SellSoftwareException.class, () -> loginController.userLogin(new LoginUserInfo(), request));
     }
 }

@@ -2,29 +2,24 @@ package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
+import com.tw.sellsoftware.utils.SellSoftwareException;
+import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Service
 public class LoginService {
 
     private final UserInfoService userInfoService;
 
-    public LoginService(UserInfoService userInfoService){
+    public LoginService(UserInfoService userInfoService) {
         this.userInfoService = userInfoService;
     }
 
-    public Optional<String> userLogin(LoginUserInfo userInfo, HttpServletRequest request) {
+    public UserInfo userLogin(LoginUserInfo userInfo) {
         UserInfo userInfoForDB = userInfoService.getUserByUserName(userInfo.getUserName());
-        if(userInfoForDB == null){
-            return Optional.of("User does not exist!");
-        }
-        if(!userInfo.getPassword().equals(userInfoForDB.getPassword())){
-            return Optional.of("Password error!");
-        }
-        request.getSession().setAttribute("userInfo",userInfoForDB);
-        return Optional.empty();
+        if (userInfoForDB == null) throw new SellSoftwareException(SellSoftwareExceptionEnum.USER_NOT_EXIST);
+        if (!userInfo.getPassword().equals(userInfoForDB.getPassword()))
+            throw new SellSoftwareException(SellSoftwareExceptionEnum.USER_PASSWORD_ERROR);
+        return userInfoForDB;
     }
 }
