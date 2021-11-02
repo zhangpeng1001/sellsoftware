@@ -15,12 +15,9 @@ public class RegisterService {
 
     private final VipInfoService vipInfoService;
 
-    private final UserVipRelationService userVipRelationService;
-
-    public RegisterService(UserInfoService userInfoService, VipInfoService vipInfoService, UserVipRelationService userVipRelationService) {
+    public RegisterService(UserInfoService userInfoService, VipInfoService vipInfoService) {
         this.userInfoService = userInfoService;
         this.vipInfoService = vipInfoService;
-        this.userVipRelationService = userVipRelationService;
     }
 
     @Transactional
