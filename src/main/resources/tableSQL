@@ -3,7 +3,7 @@ CREATE TABLE `t_user_info` (
   `user_name` varchar(128) NOT NULL,
   `email` varchar(64) ,
   `phone` varchar(32) ,
-  `password` varchar(255) , NOT NULL,
+  `password` varchar(255) NOT NULL,
   `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
