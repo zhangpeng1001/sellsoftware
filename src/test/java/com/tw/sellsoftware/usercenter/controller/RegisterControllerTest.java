@@ -1,9 +1,9 @@
 package com.tw.sellsoftware.usercenter.controller;
 
-import com.tw.sellsoftware.usercenter.domain.RegisterUserInfo;
-import com.tw.sellsoftware.usercenter.domain.UserInfo;
-import com.tw.sellsoftware.usercenter.service.LoginService;
 import com.tw.sellsoftware.usercenter.service.RegisterService;
+import com.tw.sellsoftware.usercenter.vo.RegisterUserInfo;
+import com.tw.sellsoftware.utils.SellSoftwareException;
+import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,9 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -30,15 +29,13 @@ class RegisterControllerTest {
 
     @Test
     void userRegisterForSuccess() {
-        RegisterUserInfo userInfo = new RegisterUserInfo();
-        Mockito.when(registerService.userRegister(Mockito.any())).thenReturn(Optional.empty());
-        assertEquals(registerController.userRegister(userInfo).getStatusCode(), HttpStatus.OK);
+        Mockito.doNothing().when(registerService).userRegister(Mockito.any());
+        assertEquals(registerController.userRegister(new RegisterUserInfo()).getStatusCode(), HttpStatus.OK);
     }
 
     @Test
-    void userRegisterForFail() {
-        RegisterUserInfo userInfo = new RegisterUserInfo();
-        Mockito.when(registerService.userRegister(Mockito.any())).thenReturn(Optional.of("error msg"));
-        assertEquals(registerController.userRegister(userInfo).getStatusCode(), HttpStatus.BAD_REQUEST);
+    void userRegisterFailure() {
+        Mockito.doThrow(new SellSoftwareException(SellSoftwareExceptionEnum.USER_NAME_EXIST)).when(registerService).userRegister(Mockito.any());
+        assertThrows(SellSoftwareException.class, () -> registerController.userRegister(new RegisterUserInfo()));
     }
 }

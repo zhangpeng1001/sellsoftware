@@ -13,12 +13,9 @@ public class UserVipRelationService {
         this.userVipRelationMapper = userVipRelationMapper;
     }
 
-
     public UserVipRelation selectByUserId(Integer userId) {
         return userVipRelationMapper.selectByUserId(userId);
     }
 
-    public int insert(UserVipRelation userVipRelation) {
-        return userVipRelationMapper.insert(userVipRelation);
-    }
+
 }

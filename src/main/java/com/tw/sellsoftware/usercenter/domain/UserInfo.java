@@ -1,6 +1,6 @@
 package com.tw.sellsoftware.usercenter.domain;
 
-import java.time.LocalDate;
+import com.tw.sellsoftware.usercenter.vo.RegisterUserInfo;
 
 public class UserInfo {
     private Integer id;
@@ -12,6 +12,16 @@ public class UserInfo {
     private String phone;
 
     private String password;
+
+    public UserInfo() {
+    }
+
+    public UserInfo(RegisterUserInfo registerUserInfo) {
+        this.userName = registerUserInfo.getUserName();
+        this.email = registerUserInfo.getEmail();
+        this.phone = registerUserInfo.getPhone();
+        this.password = registerUserInfo.getPassword();
+    }
 
     public Integer getId() {
         return id;

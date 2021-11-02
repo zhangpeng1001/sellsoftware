@@ -2,14 +2,13 @@ package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
 import com.tw.sellsoftware.usercenter.domain.UserVipRelation;
+import com.tw.sellsoftware.usercenter.vo.RegisterUserInfo;
+import com.tw.sellsoftware.utils.SellSoftwareException;
+import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
-import java.util.Optional;
 
 @Service
-@Transactional
 public class RegisterService {
 
     private final UserInfoService userInfoService;
@@ -24,34 +23,35 @@ public class RegisterService {
         this.userVipRelationService = userVipRelationService;
     }
 
-    public Optional<String> userRegister(UserInfo userInfo) {
-        Optional<String> optional = userDataValidate(userInfo);
-        if (optional.isPresent()) {
-            return optional;
-        }
-        register(userInfo);
-        return Optional.empty();
+    @Transactional
+    public void userRegister(RegisterUserInfo registerUserInfo) {
+        userDataValidate(registerUserInfo);
+        register(registerUserInfo);
     }
 
-    private void register(UserInfo userInfo) {
+    private void register(RegisterUserInfo registerUserInfo) {
+        UserInfo userInfo = new UserInfo(registerUserInfo);
         userInfoService.register(userInfo);
-        UserVipRelation userVipRelation = new UserVipRelation();
-        userVipRelation.setUserId(userInfo.getId());
-        userVipRelation.setVipId(vipInfoService.getRandomVipInfo().getId());
-        userVipRelationService.insert(userVipRelation);
+        userInfoService.insertUserVipRelation(getUserVipRelation(userInfo.getId()));
     }
 
-    private Optional<String> userDataValidate(UserInfo userInfo) {
-        UserInfo userInfoForDB = userInfoService.getUserByNameOrPhoneOrEmail(userInfo.getUserName(), userInfo.getPhone(), userInfo.getEmail());
-        if (userInfoForDB != null && userInfo.getUserName().equals(userInfoForDB.getUserName())) {
-            return Optional.of("User name already exists!");
+    private UserVipRelation getUserVipRelation(Integer userId){
+        UserVipRelation userVipRelation = new UserVipRelation();
+        userVipRelation.setUserId(userId);
+        userVipRelation.setVipId(vipInfoService.getRandomVipInfo().getId());
+        return userVipRelation;
+    }
+
+    private void userDataValidate(RegisterUserInfo registerUserInfo) {
+        UserInfo userInfoForDB = userInfoService.getUserByNameOrPhoneOrEmail(registerUserInfo.getUserName(), registerUserInfo.getPhone(), registerUserInfo.getEmail());
+        if (userInfoForDB != null && registerUserInfo.getUserName().equals(userInfoForDB.getUserName())) {
+            throw new SellSoftwareException(SellSoftwareExceptionEnum.USER_NAME_EXIST);
         }
-        if (userInfoForDB != null && userInfo.getPhone().equals(userInfoForDB.getPhone())) {
-            return Optional.of("User phone already exists!");
+        if (userInfoForDB != null && registerUserInfo.getPhone().equals(userInfoForDB.getPhone())) {
+            throw new SellSoftwareException(SellSoftwareExceptionEnum.USER_PHONE_EXIST);
         }
-        if (userInfoForDB != null && userInfo.getEmail().equals(userInfoForDB.getEmail())) {
-            return Optional.of("User Email already exists!");
+        if (userInfoForDB != null && registerUserInfo.getEmail().equals(userInfoForDB.getEmail())) {
+            throw new SellSoftwareException(SellSoftwareExceptionEnum.USER_EMAIL_EXIST);
         }
-        return Optional.empty();
     }
 }

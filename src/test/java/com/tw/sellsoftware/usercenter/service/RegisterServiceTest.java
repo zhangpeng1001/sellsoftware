@@ -1,6 +1,9 @@
 package com.tw.sellsoftware.usercenter.service;
 
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
+import com.tw.sellsoftware.usercenter.domain.VipInfo;
+import com.tw.sellsoftware.usercenter.vo.RegisterUserInfo;
+import com.tw.sellsoftware.utils.SellSoftwareException;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,49 +18,59 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class RegisterServiceTest {
 
+    private final String USER_NAME = "testUser";
+
+    private final String USER_PHONE = "13109248765";
+
+    private final String USER_EMAIL = "12306@163.com";
+
     @InjectMocks
     private RegisterService registerService;
 
     @Mock
     private UserInfoService userInfoService;
 
+    @Mock
+    private VipInfoService vipInfoService;
+
     @Test
     void userRegisterForSuccess() {
-//        UserInfo userInfo = getUserInfo();
-//        Mockito.when(userInfoService.getUserByNameOrPhoneOrEmail(Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).thenReturn(new UserInfo());
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), false);
+        Mockito.when(userInfoService.getUserByNameOrPhoneOrEmail(Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).thenReturn(new UserInfo());
+        Mockito.when(userInfoService.register(Mockito.any())).thenReturn(1);
+        Mockito.when(userInfoService.insertUserVipRelation(Mockito.any())).thenReturn(1);
+        Mockito.when(vipInfoService.getRandomVipInfo()).thenReturn(new VipInfo());
+        registerService.userRegister(getRegisterUserInfo());
     }
 
     @Test
-    void userRegisterForFail() {
-//        UserInfo userInfo = new UserInfo();
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), true);
-//        userInfo.setUserName("testUser");
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), true);
-//        userInfo.setPhone("13109248765");
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), true);
-//        userInfo.setEmail("12306@163.com");
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), true);
-//        userInfo.setPassword("123456");
-//        UserInfo userInfoForDB = new UserInfo();
-//        userInfoForDB.setPhone("13109248764");
-//        userInfoForDB.setEmail("12307@163.com");
-//        Mockito.when(userInfoService.getUserByPhoneOrEmail(userInfo)).thenReturn(userInfoForDB);
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), true);
-//        userInfoForDB.setPhone("");
-//        Mockito.when(userInfoService.getUserByPhoneOrEmail(userInfo)).thenReturn(userInfoForDB);
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), true);
-//        userInfoForDB.setEmail("");
-//        Mockito.when(userInfoService.getUserByPhoneOrEmail(userInfo)).thenReturn(userInfoForDB);
-//        assertEquals(registerService.userRegister(userInfo).isPresent(), false);
+    void userRegisterForFailureOfUserNameExist() {
+        UserInfo userInfoForDB = new UserInfo();
+        userInfoForDB.setUserName(USER_NAME);
+        Mockito.when(userInfoService.getUserByNameOrPhoneOrEmail(Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).thenReturn(userInfoForDB);
+        assertThrows(SellSoftwareException.class, () -> registerService.userRegister(getRegisterUserInfo()));
     }
 
-    private UserInfo getUserInfo() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName("testUser");
-        userInfo.setPhone("13109248765");
-        userInfo.setEmail("12306@163.com");
-        userInfo.setPassword("123456");
+    @Test
+    void userRegisterForFailureOfPhoneNumExist() {
+        UserInfo userInfoForDB = new UserInfo();
+        userInfoForDB.setPhone(USER_PHONE);
+        Mockito.when(userInfoService.getUserByNameOrPhoneOrEmail(Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).thenReturn(userInfoForDB);
+        assertThrows(SellSoftwareException.class, () -> registerService.userRegister(getRegisterUserInfo()));
+    }
+
+    @Test
+    void userRegisterForFailureOfEmailExist() {
+        UserInfo userInfoForDB = new UserInfo();
+        userInfoForDB.setEmail(USER_EMAIL);
+        Mockito.when(userInfoService.getUserByNameOrPhoneOrEmail(Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).thenReturn(userInfoForDB);
+        assertThrows(SellSoftwareException.class, () -> registerService.userRegister(getRegisterUserInfo()));
+    }
+
+    private RegisterUserInfo getRegisterUserInfo() {
+        RegisterUserInfo userInfo = new RegisterUserInfo();
+        userInfo.setUserName(USER_NAME);
+        userInfo.setPhone(USER_PHONE);
+        userInfo.setEmail(USER_EMAIL);
         return userInfo;
     }
 }
