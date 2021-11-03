@@ -14,6 +14,8 @@ import com.tw.sellsoftware.usercenter.service.UserVipRelationService;
 import com.tw.sellsoftware.usercenter.service.VipInfoService;
 import com.tw.sellsoftware.utils.CommonUtils;
 import com.tw.sellsoftware.utils.Constant;
+import com.tw.sellsoftware.utils.SellSoftwareException;
+import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +55,7 @@ public class PurchaseService {
         orderInfo.setOrderPrice(purchaseParam.getOrderPrice());
         orderInfo.setPayTime(LocalDateTime.now());
         orderInfoMapper.insertOrderInfo(orderInfo);
-        orderDetailMapper.insertDetailBatch(purchaseParam.getOrderDetailList().stream().map(detailParam->{
+        orderDetailMapper.insertDetailBatch(purchaseParam.getOrderDetailList().stream().map(detailParam -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderId(orderInfo.getId());
             orderDetail.setUserId(currentUserId);
@@ -90,10 +92,7 @@ public class PurchaseService {
         SoftwareInfo softwareInfo = null;
         BigDecimal totalPrice = BigDecimal.ZERO;
         for (OrderDetailParam detailParam : purchaseParam.getOrderDetailList()) {
-            softwareInfo = softwareInfoService.querySoftwareById(detailParam.getSoftwareId());
-            if (softwareInfo == null || softwareInfo.getSoftwarePrice() == null) {
-                return Optional.of("Request parameter error!");
-            }
+            softwareInfo = softwareInfoService.querySoftwareById(detailParam.getSoftwareId()).orElseThrow(() -> new SellSoftwareException(SellSoftwareExceptionEnum.REQUEST_PARAMETER_ERROR));
             if (detailParam.getSoftwarePrice().compareTo(softwareInfo.getSoftwarePrice()) != 0) {
                 return Optional.of("Request parameter error!");
             }

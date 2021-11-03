@@ -19,17 +19,12 @@ public class SoftwareInfoService {
         this.softwareInfoMapper = softwareInfoMapper;
     }
 
-    public SoftwareInfo querySoftwareById(int softwareId) {
-        return softwareInfoMapper.querySoftwareById(softwareId);
+    public Optional<SoftwareInfo> querySoftwareById(int softwareId) {
+        return Optional.ofNullable(softwareInfoMapper.querySoftwareById(softwareId));
     }
 
     public Optional<List<SoftwareInfo>> getSoftwareInfo(PageInfo pageInfo) {
-        return Optional.ofNullable(querySoftwareInfo(pageInfo));
+        return Optional.ofNullable(softwareInfoMapper.querySoftwareInfo(pageInfo));
     }
-
-    private List<SoftwareInfo> querySoftwareInfo(PageInfo pageInfo) {
-        return softwareInfoMapper.querySoftwareInfo(pageInfo);
-    }
-
 
 }

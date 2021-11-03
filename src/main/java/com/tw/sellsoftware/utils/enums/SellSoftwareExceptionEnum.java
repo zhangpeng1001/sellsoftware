@@ -5,6 +5,7 @@ public enum SellSoftwareExceptionEnum {
     //common model
     PAGE_NUM_ERROR("pageNum parameter error!"),
     PAGE_SIZE_ERROR("pageSize parameter error!"),
+    REQUEST_PARAMETER_ERROR("Request parameter error!"),
     //login model
     USER_NOT_EXIST("User does not exist!"),
     USER_PASSWORD_ERROR("Password error!"),
