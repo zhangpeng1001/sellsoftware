@@ -12,7 +12,7 @@ public class PageInfo {
         return pageNum;
     }
 
-    public void setPageNum(int pageNum) throws Exception {
+    public void setPageNum(int pageNum) {
         if (pageNum < 0) {
             throw new SellSoftwareException(SellSoftwareExceptionEnum.PAGE_NUM_ERROR);
         } else {
@@ -24,7 +24,7 @@ public class PageInfo {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) throws Exception {
+    public void setPageSize(int pageSize) {
         if (pageSize < 1 || pageSize > 100) {
             throw new SellSoftwareException(SellSoftwareExceptionEnum.PAGE_SIZE_ERROR);
         } else {
