@@ -1,5 +1,7 @@
 package com.tw.sellsoftware.utils;
 
+import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
+
 public class PageInfo {
 
     private int pageNum;
@@ -12,7 +14,7 @@ public class PageInfo {
 
     public void setPageNum(int pageNum) throws Exception {
         if (pageNum < 0) {
-            throw new Exception("Paging parameter error!");
+            throw new SellSoftwareException(SellSoftwareExceptionEnum.PAGE_NUM_ERROR);
         } else {
             this.pageNum = pageNum;
         }
@@ -23,14 +25,14 @@ public class PageInfo {
     }
 
     public void setPageSize(int pageSize) throws Exception {
-        if (pageSize < 1 || pageSize >100) {
-            throw new Exception("Paging parameter error!");
+        if (pageSize < 1 || pageSize > 100) {
+            throw new SellSoftwareException(SellSoftwareExceptionEnum.PAGE_SIZE_ERROR);
         } else {
             this.pageSize = pageSize;
         }
     }
 
     public void getStart(int start) {
-        this.start = pageNum*pageSize;
+        this.start = pageNum * pageSize;
     }
 }
