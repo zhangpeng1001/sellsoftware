@@ -8,6 +8,7 @@ import com.tw.sellsoftware.utils.SellSoftwareException;
 import com.tw.sellsoftware.utils.enums.SellSoftwareExceptionEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,7 +18,7 @@ public class LoginService {
 
     private final LoginTakenMapper loginTakenMapper;
 
-    public LoginService(UserInfoService userInfoService,LoginTakenMapper loginTakenMapper) {
+    public LoginService(UserInfoService userInfoService, LoginTakenMapper loginTakenMapper) {
         this.userInfoService = userInfoService;
         this.loginTakenMapper = loginTakenMapper;
     }
@@ -28,7 +29,11 @@ public class LoginService {
         if (!userInfo.getPassword().equals(userInfoForDB.getPassword()))
             throw new SellSoftwareException(SellSoftwareExceptionEnum.USER_OR_PASSWORD_ERROR);
         String token = UUID.randomUUID().toString();
-        loginTakenMapper.insertLoginToken(new LoginToken(userInfoForDB.getId(),token));
+        loginTakenMapper.insertLoginToken(new LoginToken(userInfoForDB.getId(), token));
         return token;
+    }
+
+    public Optional<LoginToken> getLoginTokenByToken(String token) {
+        return Optional.ofNullable(loginTakenMapper.getLoginTokenByToken(token));
     }
 }

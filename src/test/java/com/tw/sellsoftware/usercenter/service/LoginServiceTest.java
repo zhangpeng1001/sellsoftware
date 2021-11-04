@@ -1,6 +1,8 @@
 package com.tw.sellsoftware.usercenter.service;
 
+import com.tw.sellsoftware.usercenter.domain.LoginToken;
 import com.tw.sellsoftware.usercenter.domain.UserInfo;
+import com.tw.sellsoftware.usercenter.mapper.LoginTakenMapper;
 import com.tw.sellsoftware.usercenter.vo.LoginUserInfo;
 import com.tw.sellsoftware.utils.SellSoftwareException;
 import org.junit.jupiter.api.Test;
@@ -11,8 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -28,11 +29,16 @@ class LoginServiceTest {
     @Mock
     private UserInfoService userInfoService;
 
+    @Mock
+    private LoginTakenMapper loginTakenMapper;
+
     @Test
     void userLoginForSuccess() {
         UserInfo userInfo = new UserInfo();
+        userInfo.setId(1);
         userInfo.setPassword(PASS_WORD);
         Mockito.when(userInfoService.getUserByUserName(USER_NAME)).thenReturn(userInfo);
+        Mockito.when(loginTakenMapper.insertLoginToken(Mockito.any())).thenReturn(1);
         assertTrue(loginService.userLogin(getLoginUserInfo()).length() > 0);
     }
 
@@ -46,6 +52,18 @@ class LoginServiceTest {
     void userLoginFailureOfErrorPassword() {
         Mockito.when(userInfoService.getUserByUserName(USER_NAME)).thenReturn(new UserInfo());
         assertThrows(SellSoftwareException.class, () -> loginService.userLogin(getLoginUserInfo()));
+    }
+
+    @Test
+    void getLoginTokenByTokenSuccess(){
+        Mockito.when(loginTakenMapper.getLoginTokenByToken(Mockito.any())).thenReturn(new LoginToken());
+        assertTrue(loginService.getLoginTokenByToken("").isPresent());
+    }
+
+    @Test
+    void getLoginTokenByTokenOfNull(){
+        Mockito.when(loginTakenMapper.getLoginTokenByToken(Mockito.any())).thenReturn(null);
+        assertFalse(loginService.getLoginTokenByToken("").isPresent());
     }
 
     private LoginUserInfo getLoginUserInfo() {
