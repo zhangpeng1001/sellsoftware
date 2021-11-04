@@ -5,13 +5,18 @@ import java.time.LocalDateTime;
 public class LoginToken {
     private Integer id;
 
-    private String userId;
+    private int userId;
 
     private String userLoginToken;
 
     private LocalDateTime updateTime;
 
     public LoginToken() {
+    }
+
+    public LoginToken(int userId, String userLoginToken) {
+        this.userId = userId;
+        this.userLoginToken = userLoginToken;
     }
 
     public Integer getId() {
@@ -22,11 +27,11 @@ public class LoginToken {
         this.id = id;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

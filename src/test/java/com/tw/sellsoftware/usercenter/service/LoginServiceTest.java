@@ -11,8 +11,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -33,7 +33,7 @@ class LoginServiceTest {
         UserInfo userInfo = new UserInfo();
         userInfo.setPassword(PASS_WORD);
         Mockito.when(userInfoService.getUserByUserName(USER_NAME)).thenReturn(userInfo);
-        assertNotEquals(null, loginService.userLogin(getLoginUserInfo()));
+        assertTrue(loginService.userLogin(getLoginUserInfo()).length() > 0);
     }
 
     @Test

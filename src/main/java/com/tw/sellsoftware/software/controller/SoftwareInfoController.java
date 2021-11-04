@@ -23,6 +23,6 @@ public class SoftwareInfoController {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
-        return softwareInfoService.getSoftwareInfo(pageInfo).map(softwareInfoList -> ResponseEntity.ok(softwareInfoList)).orElse(ResponseEntity.ok(null));
+        return softwareInfoService.getSoftwareInfo(pageInfo).map(softwareInfoList -> ResponseEntity.ok(softwareInfoList)).orElseGet(()-> ResponseEntity.ok(null));
     }
 }

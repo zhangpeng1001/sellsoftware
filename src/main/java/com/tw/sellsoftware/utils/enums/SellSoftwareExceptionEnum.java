@@ -7,8 +7,7 @@ public enum SellSoftwareExceptionEnum {
     PAGE_SIZE_ERROR("pageSize parameter error!"),
     REQUEST_PARAMETER_ERROR("Request parameter error!"),
     //login model
-    USER_NOT_EXIST("User does not exist!"),
-    USER_PASSWORD_ERROR("Password error!"),
+    USER_OR_PASSWORD_ERROR("User or password error!"),
     //register model
     USER_NAME_EXIST("User name already exists!"),
     USER_PHONE_EXIST("User phone already exists!"),
