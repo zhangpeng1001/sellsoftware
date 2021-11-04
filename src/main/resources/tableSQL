@@ -61,6 +61,17 @@ CREATE TABLE `t_order_detail` (
 );
 
 
+create table t_login_token
+(
+    id             int auto_increment  primary key,
+    user_id        int                                 not null,
+    user_login_token  varchar(128)                        not null,
+    create_time timestamp default CURRENT_TIMESTAMP ,
+    update_time timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
+);
+
+
+
 INSERT INTO `t_vip_info` (`id`, `vip_grade`, `discount`, `vip_desc`, `create_time`, `update_time`) VALUES (1, '1', 0.80, '白银会员', '2021-10-20 14:57:12', '2021-10-20 14:57:46');
 INSERT INTO `t_vip_info` (`id`, `vip_grade`, `discount`, `vip_desc`, `create_time`, `update_time`) VALUES (2, '2', 0.60, '黄金会员', '2021-10-20 14:57:40', '2021-10-20 14:57:43');
 INSERT INTO `t_vip_info` (`id`, `vip_grade`, `discount`, `vip_desc`, `create_time`, `update_time`) VALUES (3, '3', 0.50, '铂金会员', '2021-10-20 14:58:11', '2021-10-20 14:58:14');
