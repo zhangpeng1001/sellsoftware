@@ -23,8 +23,8 @@ public class SoftwareInfoService {
         return Optional.ofNullable(softwareInfoMapper.querySoftwareById(softwareId));
     }
 
-    public Optional<List<SoftwareInfo>> getSoftwareInfo(PageInfo pageInfo) {
-        return Optional.ofNullable(softwareInfoMapper.querySoftwareInfo(pageInfo));
+    public List<SoftwareInfo> getSoftwareInfo(PageInfo pageInfo) {
+        return softwareInfoMapper.querySoftwareInfo(pageInfo);
     }
 
 }

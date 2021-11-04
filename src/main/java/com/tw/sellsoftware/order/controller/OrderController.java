@@ -31,7 +31,7 @@ public class OrderController {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
-        Optional<List<OrderInfo>> orderList = orderService.getHistoryOrderInfo(pageInfo, ((UserInfo) request.getSession().getAttribute(Constant.USER_INFO_SESSION_KEY)).getId());
-        return orderList.map(orderInfos -> ResponseEntity.ok(orderInfos)).orElse(ResponseEntity.ok(null));
+        Optional<List<OrderInfo>> orderList = orderService.getHistoryOrderInfo(pageInfo,(Integer)request.getAttribute(Constant.USER_ID));
+        return orderList.map(orderInfos -> ResponseEntity.ok(orderInfos)).orElseGet(() -> ResponseEntity.ok(null));
     }
 }

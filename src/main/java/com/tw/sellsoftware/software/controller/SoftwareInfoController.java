@@ -19,10 +19,10 @@ public class SoftwareInfoController {
     }
 
     @GetMapping("/list/{pageNum}/{pageSize}")
-    public ResponseEntity getSoftwareInfo(@PathVariable int pageNum, @PathVariable int pageSize){
+    public ResponseEntity getSoftwareInfo(@PathVariable int pageNum, @PathVariable int pageSize) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
-        return softwareInfoService.getSoftwareInfo(pageInfo).map(softwareInfoList -> ResponseEntity.ok(softwareInfoList)).orElseGet(()-> ResponseEntity.ok(null));
+        return ResponseEntity.ok(softwareInfoService.getSoftwareInfo(pageInfo));
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +31,8 @@ class SoftwareInfoServiceTest {
     @Test
     void querySoftwareByIdForSoftwareInfo() {
         Mockito.when(softwareInfoMapper.querySoftwareById(Mockito.any())).thenReturn(new SoftwareInfo());
-        assertNotEquals(null, softwareInfoService.querySoftwareById(softwareId));
+        assertNotNull(softwareInfoService.querySoftwareById(softwareId));
     }
-
 
     @Test
     void querySoftwareByIdForNull() {
@@ -42,13 +42,15 @@ class SoftwareInfoServiceTest {
 
     @Test
     void getSoftwareInfoForSoftwareInfoList() {
-        Mockito.when(softwareInfoMapper.querySoftwareInfo(Mockito.any())).thenReturn(new ArrayList<>());
-        assertNotEquals(null, softwareInfoService.getSoftwareInfo(new PageInfo()));
+        List<SoftwareInfo> list = new ArrayList<>();
+        list.add(new SoftwareInfo());
+        Mockito.when(softwareInfoMapper.querySoftwareInfo(Mockito.any())).thenReturn(list);
+        assertTrue(softwareInfoService.getSoftwareInfo(new PageInfo()).size() > 0);
     }
 
     @Test
-    void getSoftwareInfoForNull() {
-        Mockito.when(softwareInfoMapper.querySoftwareInfo(Mockito.any())).thenReturn(null);
-        assertFalse(softwareInfoService.getSoftwareInfo(new PageInfo()).isPresent());
+    void getSoftwareInfoForEmpty() {
+        Mockito.when(softwareInfoMapper.querySoftwareInfo(Mockito.any())).thenReturn(new ArrayList<>());
+        assertFalse(softwareInfoService.getSoftwareInfo(new PageInfo()).size() > 0);
     }
 }
